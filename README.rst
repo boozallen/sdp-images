@@ -4,6 +4,13 @@
 SDP Container Images
 --------------------
 
+==================
+Listing the Images
+==================
+
+Run ``make list`` to see all of the images built by this repository 
+and the base directory where you can find their resources. 
+
 ==========================
 Building the Documentation
 ==========================

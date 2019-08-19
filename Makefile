@@ -9,7 +9,8 @@ SOURCEDIR     = .
 BUILDDIR      = docs
 
 
-.PHONY: help Makefile 
+.PHONY: help Makefile
+.SILENT: info 
 
 # Put it first so that "make" without argument is like "make help".
 help: ## Show target options
@@ -17,8 +18,6 @@ help: ## Show target options
 
 clean: ## removes remote documentation and compiled documentation
 	rm -rf docs/doctrees docs/html 	
-
-
 
 # build docs 
 html: ## builds documentation in _build/html 
@@ -40,6 +39,13 @@ html: ## builds documentation in _build/html
 
 deploy: ;
 live: ; 
+
+info:
+	@: 
+
+list: ## lists container images in the repository and where they are built
+	@echo "Listing container images and where they're built: "
+	@find . -type f -name Makefile -execdir make info \;
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).

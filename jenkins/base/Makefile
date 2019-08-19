@@ -26,7 +26,7 @@ push: ## builds and publishes container image
 	docker push $(TAG)
 
 info: 
-	@echo $(SRCDIR)
+	@echo "$(TAG) -> $$(git ls-files --full-name Makefile)"
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
