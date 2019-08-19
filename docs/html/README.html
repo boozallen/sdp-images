@@ -152,6 +152,50 @@
             
   <div class="section" id="sdp-container-images">
 <h1>SDP Container Images<a class="headerlink" href="#sdp-container-images" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="listing-the-images">
+<h2>Listing the Images<a class="headerlink" href="#listing-the-images" title="Permalink to this headline">¶</a></h2>
+<p>Run <code class="docutils literal"><span class="pre">make</span> <span class="pre">list</span></code> to see all of the images built by this repository
+and the base directory where you can find their resources.</p>
+</div>
+<div class="section" id="building-an-image">
+<h2>Building an Image<a class="headerlink" href="#building-an-image" title="Permalink to this headline">¶</a></h2>
+<p>Within the images directory, run <code class="docutils literal"><span class="pre">make</span> <span class="pre">build</span></code> to build the image.</p>
+</div>
+<div class="section" id="pushing-an-image">
+<h2>Pushing an Image<a class="headerlink" href="#pushing-an-image" title="Permalink to this headline">¶</a></h2>
+<p>Within the images directory, run <code class="docutils literal"><span class="pre">make</span> <span class="pre">push</span></code> to build and push the image.</p>
+<p>You will be prompted for your GitHub Username and Password.</p>
+<p>You must have <code class="docutils literal"><span class="pre">read:packages</span></code> and <code class="docutils literal"><span class="pre">write:packages</span></code> permissions to push to
+the github container registry.</p>
+</div>
+<div class="section" id="versioning-images">
+<h2>Versioning Images<a class="headerlink" href="#versioning-images" title="Permalink to this headline">¶</a></h2>
+<p>Each <code class="docutils literal"><span class="pre">Makefile</span></code> has a <code class="docutils literal"><span class="pre">VERSION</span></code> variable at the top which contains the
+tag that will be used when building and pushing the container image.</p>
+<p>When making changes, the Pull Request should include an incremented container
+image version change.</p>
+</div>
+<div class="section" id="building-the-documentation">
+<h2>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The documentation is built using <a class="reference external" href="http://www.sphinx-doc.org/en/master/">Sphinx</a> and the
+<a class="reference external" href="https://sphinx-rtd-theme.readthedocs.io/en/stable/">Read the Docs</a> theme.</p>
+<p>The documentation is configured via the <code class="docutils literal"><span class="pre">conf.py</span></code> file at the root of this repository.</p>
+<p>Building the documentation requires docker and can be done via:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">make</span> <span class="pre">html</span></code></div>
+</div>
+</div></blockquote>
+<p>This will compile the documentation and can be viewed at <code class="docutils literal"><span class="pre">docs/index.html</span></code>.</p>
+<div class="section" id="hot-reloading">
+<h3>Hot Reloading<a class="headerlink" href="#hot-reloading" title="Permalink to this headline">¶</a></h3>
+<p>To get view the documentation updated in realtime during local development, run:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">make</span> <span class="pre">html</span> <span class="pre">live</span></code></div>
+</div>
+</div></blockquote>
+<p>The documentation will be viewable at <code class="docutils literal"><span class="pre">http://localhost:8000/readme.html</span></code></p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Images 🐳</span></p>
 <ul>
@@ -159,6 +203,8 @@
 <li class="toctree-l1"><a class="reference internal" href="jenkins-agent/README.html">Jenkins Agent</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sonarqube/README.html">SonarQube</a></li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 

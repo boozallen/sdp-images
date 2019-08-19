@@ -49,9 +49,9 @@ The documentation is configured via the ``conf.py`` file at the root of this rep
 
 Building the documentation requires docker and can be done via: 
 
-    | ``make docs`` 
+    | ``make html`` 
 
-This will compile the documentation and can be viewed at ``docs/_build/html/README.html``. 
+This will compile the documentation and can be viewed at ``docs/index.html``. 
 
 *************
 Hot Reloading
@@ -59,9 +59,9 @@ Hot Reloading
 
 To get view the documentation updated in realtime during local development, run: 
 
-    | ``make docs live``
+    | ``make html live``
 
-The documentation will be viewable at ``http://localhost:8000``
+The documentation will be viewable at ``http://localhost:8000/readme.html``
 
 .. toctree::
    :caption: Images 🐳
