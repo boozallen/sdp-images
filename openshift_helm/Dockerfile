@@ -39,7 +39,7 @@ RUN mkdir -p /tmp/oc-client && cd /tmp/oc-client && \
     tar -xvf oc-client.tar.gz && \
     mv */oc /usr/local/bin/oc
 
-RUN wget -O get_helm.sh https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get && \
+RUN curl -kLO https://git.io/get_helm.sh && \
     chmod 700 ./get_helm.sh && \
     sh ./get_helm.sh --version v2.8.2 && \
     rm -rf /var/cache/apk/*

@@ -10,3 +10,4 @@ environment variable configurations.
    :header: "Name", "Description", "Default" 
 
     "WEB_CONTEXT", "the root path to access sonarqube, for when hosting behind an ALB with path based routing.", "" 
+    "FORCE_AUTHENTICATION", "whether or not to allow anonymous read", "true" 

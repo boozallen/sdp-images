@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
-IMAGE    = protractor
-VERSION  = 1.0
+IMAGE    = jenkins
+VERSION  = ecs-1.0
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
