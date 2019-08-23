@@ -1,6 +1,6 @@
 OWNER    = boozallen
 REPO     = sdp-images
-IMAGE    = jenkins
+IMAGE    = sonar-scanner
 VERSION  = 1.0
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
@@ -8,6 +8,7 @@ TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile 
 .ONESHELL: push 
+
 
 # Put it first so that "make" without argument is like "make help".
 help: ## Show target options

@@ -26,7 +26,7 @@ Within the images directory, run ``make push`` to build and push the image.
 You will be prompted for your GitHub Username and Password.
 
 You must have ``read:packages`` and ``write:packages`` permissions to push to 
-the github container registry. 
+the github container registry
 
 =================
 Versioning Images
