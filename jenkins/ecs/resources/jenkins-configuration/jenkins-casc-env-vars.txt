@@ -1,0 +1,15 @@
+Environment Variables
+=====================
+
+ROLE_ACCESS_KEY: Access key for use by ECS plugin; Needs to be set in Jenkins at startup
+ROLE_SECRET_KEY: Secret key for use by ECS plugin; Needs to be set in Jenkins at startup
+GITHUB_PASSWORD: self explanatory
+GITHUB_USERNAME: ditto
+AGENT_CLUSTER: ARN for the fargate cluster on which Jenkins agents will be deployed
+MASTER_PUBLIC_IP: Public IP for the Jenkins Master
+MASTER_PRIVATE_IP: Private IP for the Jenkins Master
+AGENT_SECURITY_GROUP: Security group to apply to Jenkins agents; format 'sg-#######'
+AGENT_SUBNET: The (private) subnet in which to deploy Jenkins agents; format 'subnet-#######'
+
+
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html
