@@ -13,11 +13,6 @@ jenkins:
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false
-  clouds:
-  - codeBuilder:
-      name: "codebuilder_1"
-      projectName: "${CODEBUILD_PROJECT_NAME}"
-      region: "${CODE_BUILD_PROJECT_REGION}"
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false
@@ -103,4 +98,30 @@ groovy:
       strategy.add(Jenkins.ADMINISTER, userName);
       jenkins.setAuthorizationStrategy(strategy);
 
+      jenkins.save()
+
+  - script: | 
+      import dev.lsegal.jenkins.codebuilder.CodeBuilderCloud;
+      import jenkins.model.Jenkins;
+
+      credentialsId = null;                                       // IAM profile or credentials file
+      region        = System.getenv("CODEBUILD_PROJECT_REGION");  // the region for the project
+      projectName   = System.getenv("CODEBUILD_PROJECT_NAME");    // the name of the project
+      label         = null;                                       // set a label to limit builds
+      jenkinsUrl    = null;                                       // use default Jenkins URL for JNLP
+      jnlpImage     = null;                                       // use default JNLP Docker image
+      computeType   = "BUILD_GENERAL1_SMALL";                     // use a small build instance
+
+      // Remove previous cloud instances
+      jenkins = Jenkins.get();
+      prevInstances = jenkins.clouds.findAll { c -> c instanceof CodeBuilderCloud }
+      jenkins.clouds.removeAll(prevInstances);
+
+      // Re-add this cloud
+      cbc = new CodeBuilderCloud(null, projectName, credentialsId, region);
+      cbc.setLabel(label);
+      cbc.setJenkinsUrl(jenkinsUrl);
+      cbc.setJnlpImage(jnlpImage);
+      cbc.setComputeType(computeType);
+      jenkins.clouds.add(cbc);
       jenkins.save()
