@@ -23,7 +23,9 @@ push: ## builds and publishes container image
 	@echo 
 	@docker login $(REGISTRY) -u $(user) -p $(pass); 
 	make build 
+	docker tag $(TAG) $(REGISTRY)/$(IMAGE):latest
 	docker push $(TAG)
+	docker push $(REGISTRY)/$(IMAGE):latest
 
 info: 
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
