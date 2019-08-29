@@ -18,6 +18,9 @@ jenkins:
       excludeClientIPFromCrumb: false
   numExecutors: 0
   slaveAgentPort: 50000
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "${JENKINS_PUBLIC_URL}"
 unclassified:
   templateGlobalConfig:
     tier:
