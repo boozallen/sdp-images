@@ -2,17 +2,6 @@ jenkins:
   agentProtocols:
   - "JNLP4-connect"
   - "Ping"
-  authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
-  securityRealm:
-    local:
-      allowsSignup: false
-      enableCaptcha: false
-      users: []
-  crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: false
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false

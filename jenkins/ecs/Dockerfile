@@ -1,7 +1,7 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
 
-FROM jenkins/jenkins:2.176.2
+FROM jenkins/jenkins:2.176.3
 
 ENV JAVA_OPTS "-Djenkins.install.runSetupWizard=false"
 ENV CASC_JENKINS_CONFIG "/var/jenkins_home/casc_configs"

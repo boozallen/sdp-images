@@ -1,7 +1,7 @@
 ace-editor:1.1
 amazon-ecr:1.6
-ant:1.9
-antisamy-markup-formatter:1.5
+ant:1.10
+antisamy-markup-formatter:1.6
 apache-httpcomponents-client-4-api:4.5.5-3.0
 authentication-tokens:1.3
 aws-credentials:1.27
@@ -14,7 +14,7 @@ codebuilder-cloud:1.0.1
 command-launcher:1.3
 configuration-as-code:1.29
 configuration-as-code-groovy:1.1
-credentials:2.2.1
+credentials:2.3.0
 credentials-binding:1.20
 display-url-api:2.3.2
 docker-commons:1.15
@@ -36,7 +36,7 @@ jsch:0.1.55.1
 junit:1.28
 ldap:1.20
 lockable-resources:2.5
-mailer:1.24
+mailer:1.25
 mapdb-api:1.0.9.0
 matrix-auth:2.4.2
 matrix-project:1.14
@@ -46,7 +46,7 @@ pipeline-aws:1.38
 pipeline-build-step:2.9
 pipeline-github-lib:1.0
 pipeline-graph-analysis:1.10
-pipeline-input-step:2.10
+pipeline-input-step:2.11
 pipeline-milestone-step:1.3.1
 pipeline-model-api:1.3.9
 pipeline-model-declarative-agent:1.1.1
@@ -56,10 +56,12 @@ pipeline-rest-api:2.12
 pipeline-stage-step:2.3
 pipeline-stage-tags-metadata:1.3.9
 pipeline-stage-view:2.12
+pipeline-utility-steps:2.3.0
 plain-credentials:1.5
 resource-disposer:0.13
 scm-api:2.6.3
 script-security:1.62
+sonar:2.9
 ssh-credentials:1.17.1
 ssh-slaves:1.30.1
 structs:1.20
@@ -69,9 +71,9 @@ timestamper:1.10
 token-macro:2.8
 variant:1.3
 workflow-aggregator:2.6
-workflow-api:2.36
+workflow-api:2.37
 workflow-basic-steps:2.18
-workflow-cps:2.73
+workflow-cps:2.74
 workflow-cps-global-lib:2.15
 workflow-durable-task-step:2.33
 workflow-job:2.34
