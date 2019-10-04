@@ -1,0 +1,40 @@
+version: '3'
+networks:
+  sdp:
+    driver: bridge
+services:
+  jenkins-master:
+    networks:
+      - sdp
+    container_name: jenkins-master
+    image: jenkins-master
+    build: 
+      context: jenkins-master
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+  jenkins-agent: 
+    networks:
+      - sdp
+    container_name: jenkins-agent
+    image: jenkins-agent
+    build: 
+      context: jenkins-agent
+    user: root
+    privileged: true
+    environment: 
+      - JENKINS_URL=http://jenkins-master:8080
+      - JENKINS_TUNNEL=jenkins-master:50000
+      - JENKINS_USERNAME=admin
+      - JENKINS_PASSWORD=admin
+      - EXECUTORS=1
+  sonarqube: 
+    networks: 
+      - sdp
+    container_name: sonarqube
+    build:
+      context: sonarqube
+    ports: 
+      - '9000:9000'
+    environment: 
+      - blah=true

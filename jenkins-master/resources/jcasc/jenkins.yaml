@@ -1,0 +1,61 @@
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  numExecutors: 0
+  slaveAgentPort: 50000
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  remotingSecurity:
+    enabled: true
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+      - id: "${ADMIN_USER}"
+        password: "${ADMIN_PASSWORD}"
+unclassified:
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "${JENKINS_URL}"
+  templateGlobalConfig:
+    tier:
+      librarySources:
+      - scm:
+          git:
+            branches:
+            - name: "*/1.1"
+            buildChooser: "default"
+            doGenerateSubmoduleConfigurations: false
+            userRemoteConfigs:
+            - credentialsId: "github"
+              url: "https://github.com/boozallen/sdp-libraries"
+        
+#######################
+# Groovy Init Scripts #
+#######################
+# groovy:
+#   - script: |
+#       println "put groovy code here"
+#
+#   - script: |
+#       println "you can include multiple scripts"
+
+######################
+# Global Credentials #
+######################
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "github"
+              username: ${GITHUB_USER}
+              password: ${GITHUB_PAT} #Load from Environment Variable
+              description: "GitHub Credentials"
