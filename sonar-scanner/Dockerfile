@@ -30,11 +30,7 @@ ENV PATH $PATH:/usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin
 ### Install sonar-scanner-3.0.3.778-linux
 RUN mkdir /root/tmp
 
-# Below run command for when Dependency Release available
-# RUN curl -sSLo /root/tmp/sonar-scanner-dependencies-dcar-0.2.tar.gz https://github.com/boozallen/sdp-images/releases/download/dcar-0.2/sonar-scanner-dependencies-dcar-0.2.tar.gz
-
-# remove tarball copy command once dependency release available
-COPY prebuild/sonar-scanner-dependencies-dcar-0.2.tar.gz /root/tmp/.
+RUN curl -sSLo /root/tmp/sonar-scanner-dependencies-dcar-0.2.tar.gz https://github.com/boozallen/sdp-images/releases/download/dcar-0.2/sonar-scanner-dependencies-dcar-0.2.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/sonar-scanner-dependencies-dcar-0.2.sig /root/tmp/.
