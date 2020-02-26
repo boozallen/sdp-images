@@ -16,10 +16,10 @@ LABEL name="Solutions Delivery Platform: Sonar Scanner" \
 COPY LICENSE /licenses
 
 ### Install packages
-INSTALL_PKGS="yum-utils tar java-1.8.0-openjdk-devel openssl curl grep pgrep sed unzip which" && \
-    yum --nogpgcheck --disablerepo unified_platform_ubi8_appstream --disablerepo unified_platform_ubi8_os --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
+RUN INSTALL_PKGS="java-1.8.0-openjdk-devel curl grep pgrep sed unzip which" && \
+    yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security --sec-severity=Important --sec-severity=Critical && \
-    yum --nogpgcheck --disablerepo unified_platform_ubi8_appstream --disablerepo unified_platform_ubi8_os --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+    yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 
 ENV user=sonarscanner
@@ -29,6 +29,7 @@ ENV PATH $PATH:/usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin
 
 ### Install sonar-scanner-3.0.3.778-linux
 RUN mkdir /root/tmp
+
 RUN curl -sSLo /root/tmp/sonar-scanner-dependencies-dcar-0.2.tar.gz https://github.com/boozallen/sdp-images/releases/download/dcar-0.2/sonar-scanner-dependencies-dcar-0.2.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
@@ -40,8 +41,8 @@ RUN cd /root/tmp/ && gpg --verify sonar-scanner-dependencies-dcar-0.2.sig sonar-
 RUN cd /root/tmp/  && echo "$(cat sonar-scanner-dependencies-dcar-0.2.sha256) sonar-scanner-dependencies-dcar-0.2.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf sonar-scanner-dependencies-dcar-0.2.tar.gz
 
-RUN cd /root/tmp/ && mv sonar-scanner-${SONAR_SCANNER_VERSION}-linux /usr/share/
-COPY sonar-scanner.properties /usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/conf/sonar-scanner.properties
+RUN cd /root/tmp/ && mv dependencies/sonar-scanner-${SONAR_SCANNER_VERSION}-linux /usr/share/
+COPY sonar-runner.properties /usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/conf/sonar-scanner.properties
 
 # ensure Sonar uses the provided Java for must instead of a borked glibc one
 RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin/sonar-scanner && \
