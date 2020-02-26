@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = jenkins-agent
-VERSION  = 1.0
+VERSION  = dcar-0.1
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
@@ -14,8 +14,9 @@ TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 help: ## Show target options
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
+
 build: ## build container image 
-	docker build . -t $(TAG)
+	docker build . -t $(TAG) --no-cache
 
 push: ## builds and publishes container image 
 	$(eval user := $(shell read -p "GitHub Username: " username; echo $$username))
@@ -24,6 +25,12 @@ push: ## builds and publishes container image
 	@docker login $(REGISTRY) -u $(user) -p $(pass); 
 	make build 
 	docker push $(TAG)
+
+build-dep: ## build container dependencies 
+	$(eval dir := $(shell pwd))
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z ubi7:7.8 /root/prebuild/pull-from-ubi.sh 
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z centos:7 /root/prebuild/pull-from-centos.sh 
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z ubi7:7.8 /root/prebuild/build-dep.sh 
 
 info: 
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
