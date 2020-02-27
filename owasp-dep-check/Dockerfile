@@ -4,8 +4,8 @@ FROM registry.access.redhat.com/ubi7/ubi:7.7-310
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="dcar-0.2" \
-      release="dcar-0.2" \
+      version="dcar-0.3" \
+      release="dcar-0.3" \
       summary="A Jenkins Build Agent container" \
       description="The Jenkins Build Agent container image for the Solutions Delivery Platform"
 
@@ -18,7 +18,8 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk-devel ruby  mono-devel unzip" && \
         --security --sec-severity=Important --sec-severity=Critical && \
     yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
-ENV SDP_DCAR_OWASP_DEP_CHK_VERSION dcar-0.2
+ENV SDP_DCAR_OWASP_DEP_CHK_VERSION dcar-0.3
+ENV OWASP_DEP_CHK_VERSION 5.2.4
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
@@ -26,27 +27,29 @@ ARG user=dependencycheck
 
 # Pull dependencies from sdp-images release artifacts and verify contents
 RUN mkdir /root/tmp
-#RUN curl -sSLo /root/tmp/owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/$SDP_DCAR_OWASP_DEP_CHK_VERSION/owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
+RUN curl -sSLo /root/tmp/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/$SDP_DCAR_OWASP_DEP_CHK_VERSION/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
-COPY prebuild/owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sig /root/tmp/.
-COPY prebuild/owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sha256 /root/tmp/.
+COPY prebuild/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sig /root/tmp/.
+COPY prebuild/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sha256 /root/tmp/.
 
 RUN cd /root/tmp/ && gpg --import BAH-public.key
-RUN cd /root/tmp/ && gpg --verify owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sig owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
-RUN cd /root/tmp/  && echo "$(cat owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sha256) owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz" | sha256sum --check --status
+RUN cd /root/tmp/ && gpg --verify owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sig owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
+RUN cd /root/tmp/  && echo "$(cat owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sha256) owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz" | sha256sum --check --status
 
 # Unpack dependencies and install packages
 
-RUN cd /root/tmp && tar -xzf owasp-dep-check-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz && \
+RUN cd /root/tmp && tar -xzf owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz && \
     gem install --force --local /root/tmp/dependencies/rubygems-update/*.gem && \
     update_rubygems && \
     gem install --force --local /root/tmp/dependencies/bundle-audit/*.gem && \
     gem cleanup
 
+RUN cd /root/tmp && rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/mono-devel/*.rpm
+
 RUN cd /root/tmp/dependencies/owasp && \
-    unzip dependency-check-${SDP_DCAR_OWASP_DEP_CHK_VERSION}-release.zip    && \
-    rm dependency-check-${SDP_DCAR_OWASP_DEP_CHK_VERSION}-release.zip       && \
+    unzip dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip    && \
+    rm dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip       && \
     mv dependency-check /usr/share/                                         && \
     rm -rf /root/tmp/dependencies
 

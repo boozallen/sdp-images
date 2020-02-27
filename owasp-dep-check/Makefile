@@ -29,7 +29,7 @@ push: ## builds and publishes container image
 
 build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))
-	docker run -it -v $(dir)/prebuild:/root/prebuild:z centos:7 /root/prebuild/pull-from-centos.sh
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z centos:7  /root/prebuild/pull-from-centos.sh
 	docker run -it -v $(dir)/prebuild:/root/prebuild:z ubi7:7.8 /root/prebuild/build-dep.sh
 
 info: 
