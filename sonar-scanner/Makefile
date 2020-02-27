@@ -26,10 +26,10 @@ push: ## builds and publishes container image
 	make build
 	docker push $(TAG)
 
-	build-dep: ## build container dependencies
-		$(eval dir := $(shell pwd))
-		docker run -it -v $(dir)/prebuild:/root/prebuild:z ubi7:7.8 /root/prebuild/pull-from-ubi.sh
-		docker run -it -v $(dir)/prebuild:/root/prebuild:z ubi7:7.8 /root/prebuild/build-dep.sh
+build-dep: ## build container dependencies
+	$(eval dir := $(shell pwd))
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi7:7.8 /root/prebuild/pull-from-ubi.sh
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi7:7.8 /root/prebuild/build-dep.sh
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
