@@ -38,10 +38,13 @@ COPY prebuild/sonar-scanner-dependencies-dcar-0.2.sha256 /root/tmp/.
 
 RUN cd /root/tmp/ && gpg --import BAH-public.key
 RUN cd /root/tmp/ && gpg --verify sonar-scanner-dependencies-dcar-0.2.sig sonar-scanner-dependencies-dcar-0.2.tar.gz
-RUN cd /root/tmp/  && echo "$(cat sonar-scanner-dependencies-dcar-0.2.sha256) sonar-scanner-dependencies-dcar-0.2.tar.gz" | sha256sum --check --status
+RUN cd /root/tmp/ && echo "$(cat sonar-scanner-dependencies-dcar-0.2.sha256) sonar-scanner-dependencies-dcar-0.2.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf sonar-scanner-dependencies-dcar-0.2.tar.gz
 
-RUN cd /root/tmp/ && mv dependencies/sonar-scanner-${SONAR_SCANNER_VERSION}-linux /usr/share/
+RUN cd /root/tmp/dependencies/sonar-scanner/ && unzip sonar-scanner-3.0.3.778-linux.zip
+RUN cd /root/tmp/dependencies/sonar-scanner/ && rm sonar-scanner-3.0.3.778-linux.zip
+
+RUN cd /root/tmp/dependencies/sonar-scanner/ && mv sonar-scanner-${SONAR_SCANNER_VERSION}-linux /usr/share/
 COPY sonar-runner.properties /usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/conf/sonar-scanner.properties
 
 # ensure Sonar uses the provided Java for must instead of a borked glibc one
