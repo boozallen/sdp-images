@@ -25,6 +25,12 @@ push: ## builds and publishes container image
 	make build 
 	docker push $(TAG)
 
+build-dep: ## build container dependencies 
+	$(eval dir := $(shell pwd))
+	docker run -it -v $(dir)/prebuild:/var/jenkins_home/tmp jenkins/jenkins:2.204.2 /var/jenkins_home/tmp/pull-plugins.sh
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z centos:7 /root/prebuild/pull-from-centos.sh
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z ubi7:7.8 /root/prebuild/build-dep.sh 
+
 info: 
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
 
