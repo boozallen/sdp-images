@@ -1,6 +1,6 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
-FROM nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi7:7.8
+FROM nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi8:8.1
 MAINTAINER terrana_steven@bah.com
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
@@ -26,6 +26,7 @@ RUN mkdir -p $SDP_HOME \
 ### Download dependency tarball and authenticate
 ARG TARBALL=helm-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 RUN mkdir /root/tmp && curl -sSLo /root/tmp/${TARBALL} https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}
+COPY /prebuild/${TARBALL}.tar.gz /root/tmp/.
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/${TARBALL}.sig /root/tmp/.
 COPY prebuild/${TARBALL}.sha256 /root/tmp/.
