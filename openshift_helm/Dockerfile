@@ -26,7 +26,6 @@ RUN mkdir -p $SDP_HOME \
 ### Download dependency tarball and authenticate
 ARG TARBALL=helm-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 RUN mkdir /root/tmp && curl -sSLo /root/tmp/${TARBALL} https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}
-COPY /prebuild/${TARBALL}.tar.gz /root/tmp/.
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/${TARBALL}.sig /root/tmp/.
 COPY prebuild/${TARBALL}.sha256 /root/tmp/.
