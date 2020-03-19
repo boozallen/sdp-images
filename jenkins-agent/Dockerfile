@@ -1,4 +1,7 @@
-FROM registry.access.redhat.com/ubi7/ubi:7.7-310
+FROM nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi8:8.1
+
+# this container must run as privileged
+USER root
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
@@ -13,10 +16,14 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="yum-utils tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl python27-python-pip gcc python27-python-devel.x86_64" && \
+#RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel" && \
+#    yum --disablerepo=unified_platform_ubi8_os --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
+#        --security --sec-severity=Important --sec-severity=Critical && \
+#    yum --disablerepo=unified_platform_ubi8_os --nogpgcheck --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup" && yum clean all &&\
     yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security --sec-severity=Important --sec-severity=Critical && \
-    yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+    yum --nogpgcheck --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
 ENV JENKINS_AGENT_VERSION dcar-0.1
@@ -25,25 +32,25 @@ ENV JNLP_SLAVE_VERSION 3.17
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
-# this container must run as privileged
-USER root
-
 # install docker
 RUN mkdir /root/tmp
-RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/dcar-0.1/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
+#RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/dcar-0.1/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig /root/tmp/.
 COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256 /root/tmp/.
+COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/.
 
 RUN cd /root/tmp/ && gpg --import BAH-public.key
 RUN cd /root/tmp/ && gpg --verify jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 RUN cd /root/tmp/  && echo "$(cat jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256) jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz" | sha256sum --check --status
-RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz &&  rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
+RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz && \
+    rpm -ivh --force --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
+#RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 
 RUN ls /root/tmp/dependencies/docker-compose/
-RUN printf 'pip install supervisor -f /root/tmp/dependencies/supervisor/. --no-index' | scl enable python27 -
-RUN printf 'pip install docker-compose -f /root/tmp/dependencies/docker-compose/. --no-index' | scl enable python27 -
+RUN pip3 install supervisor -f /root/tmp/dependencies/supervisor/. --no-index
+RUN pip3 install docker-compose -f /root/tmp/dependencies/docker-compose/. --no-index
 
 RUN mkdir -p /opt/jenkins-agent/bin ${HOME}
 
@@ -58,4 +65,4 @@ RUN cp /root/tmp/dependencies/swarm-client/swarm-client-$JENKINS_SWARM_VERSION.j
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT []
-CMD printf 'supervisord --configuration /etc/supervisor/conf.d/supervisord.conf' | scl enable python27 -
+CMD supervisord --configuration /etc/supervisor/conf.d/supervisord.conf
