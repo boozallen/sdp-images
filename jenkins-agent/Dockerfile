@@ -16,10 +16,6 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-#RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel" && \
-#    yum --disablerepo=unified_platform_ubi8_os --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
-#        --security --sec-severity=Important --sec-severity=Critical && \
-#    yum --disablerepo=unified_platform_ubi8_os --nogpgcheck --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup" && yum clean all &&\
     yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security --sec-severity=Important --sec-severity=Critical && \
@@ -46,7 +42,6 @@ RUN cd /root/tmp/ && gpg --verify jenkins-agent-dependencies-$JENKINS_AGENT_VERS
 RUN cd /root/tmp/  && echo "$(cat jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256) jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz && \
     rpm -ivh --force --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
-#RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 
 RUN ls /root/tmp/dependencies/docker-compose/
 RUN pip3 install supervisor -f /root/tmp/dependencies/supervisor/. --no-index
