@@ -17,9 +17,9 @@ Synopsis
 Prereqs
 -------
 
-  This repo makes use of UBI7 as the base image for the container derived from `DCAR <https://dcar.dsop.io/>`_.
-  If DCAR is unavailable to you, using a `RedHat <https://access.redhat.com/containers/#/registry.access.redhat.com/ubi7/ubi>`_ UBI image is a sufficient substitute.
-  NOTE: If substituting the image used, replace ``nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi7:7.8`` in the Dockerfile and Makefile for the image you are utilizing.
+  This repo makes use of UBI8 as the base image for the container derived from `DCAR <https://dcar.dsop.io/>`_.
+  If DCAR is unavailable to you, using a `RedHat <https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8/ubi>`_ UBI image is a sufficient substitute.
+  NOTE: If substituting the image used, replace ``nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi8:8.1`` in the Dockerfile and Makefile for the image you are utilizing.
   Additionally, this repo makes use of Docker for containers. If you do not wish to use Docker, please make edits to adapt to your implementation of container technology.
   Lastly, you should ensure all files from the repo are present in your local copy.
 
