@@ -1,4 +1,4 @@
-FROM python:3.8.0a3-alpine3.9
+FROM python:3.8.2-alpine3.11
 
 # Versions: https://pypi.python.org/pypi/awscli#downloads
 ENV AWS_CLI_VERSION 1.16.140
