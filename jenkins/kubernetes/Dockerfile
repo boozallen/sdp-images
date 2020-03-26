@@ -1,4 +1,3 @@
-###### jenkins-custom:levelup-1
 FROM registry.access.redhat.com/ubi7/ubi:7.7-310
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
@@ -14,7 +13,7 @@ LABEL name="Solutions Delivery Platform: Jenkins Master" \
 ### add licenses to this directory
 COPY LICENSE /licenses
 
-RUN INSTALL_PKGS="java-1.8.0-openjdk-devel" && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk" && \
     yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security --sec-severity=Important --sec-severity=Critical && \
     yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
@@ -33,7 +32,7 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 ENV REF $REF
 
 # Use tini as subreaper in Docker container to adopt zombie processes
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.4
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.6
 ARG TINI_VERSION=v0.18.0
 
 # jenkins version being bundled in this docker image
@@ -59,7 +58,8 @@ RUN mkdir -p ${REF}/init.groovy.d
 
 ## Fetch Dependency bundle and verify signature
 
-RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-{SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
+#RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
+COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.sig /root/tmp/.
@@ -78,7 +78,7 @@ RUN  cp /root/tmp/dependencies/tini/tini-$TINI_VERSION /sbin/tini \
 RUN cp /root/tmp/dependencies/jenkins/jenkins-war-$JENKINS_VERSION.war /usr/share/jenkins/jenkins.war 
 
 ## Place plugins in temp directory
-RUN mkdir /tmp/plugins && cp /root/tmp/dependencies/plugins/* /tmp/plugins && chown -R ${uid}:${gid} /tmp/plugins
+RUN mkdir /tmp/plugins && cp /root/tmp/dependencies/plugins/* /tmp/plugins && chown -R ${uid}:${gid} /tmp/plugins && rm -rf /root/tmp/*
 
 ENV JENKINS_UC https://updates.jenkins.io
 ENV JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
