@@ -25,7 +25,7 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed unzip which" && \
     yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### define necessary variables like PATH to application
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.5
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.7
 ARG SONAR_SCANNER_VERSION=3.0.3.778
 ENV SONAR_SCANNER_FILE=sonar-scanner-${SONAR_SCANNER_VERSION}-linux
 ENV TARBALL=sonar-scanner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
@@ -47,9 +47,7 @@ RUN cd /root/tmp/ && gpg --import BAH-public.key
 RUN cd /root/tmp/ && gpg --verify ${TARBALL}.sig ${TARBALL}.tar.gz
 RUN cd /root/tmp/ && echo "$(cat ${TARBALL}.sha256) ${TARBALL}.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf ${TARBALL}.tar.gz
-# Unzip Sonar Scanner, remove the zip file, move Sonar Scanner to a permenant folder, and copy the properties file into the necessary location
-RUN cd /root/tmp/dependencies/sonar-scanner/ && unzip ${SONAR_SCANNER_FILE}.zip
-RUN cd /root/tmp/dependencies/sonar-scanner/ && rm ${SONAR_SCANNER_FILE}.zip
+# Move Sonar Scanner to a permenant folder and copy the properties file into the necessary location
 RUN cd /root/tmp/dependencies/sonar-scanner/ && mv ${SONAR_SCANNER_FILE} /usr/share/
 COPY sonar-runner.properties /usr/share/${SONAR_SCANNER_FILE}/conf/sonar-scanner.properties
 # ensure Sonar uses the provided Java for must instead of a borked glibc one
