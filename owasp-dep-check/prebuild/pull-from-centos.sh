@@ -3,7 +3,7 @@
 set -xe
 
 OWASP_DEP_CHK_VERSION=5.3.1
-SDP_DCAR_OWASP_DEP_CHK_VERSION=dcar-0.6
+SDP_DCAR_OWASP_DEP_CHK_VERSION=dcar-0.7
 
 rm -rf /root/prebuild/dependencies
 

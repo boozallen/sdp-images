@@ -4,8 +4,8 @@ FROM registry.access.redhat.com/ubi7/ubi:7.7-310
 LABEL name="Solutions Delivery Platform: OWASP Dependency Container" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="dcar-0.6" \
-      release="dcar-0.6" \
+      version="dcar-0.7" \
+      release="dcar-0.7" \
       summary="A Jenkins Build Agent container" \
       description="The Jenkins Build Agent container image for the Solutions Delivery Platform"
 
@@ -18,7 +18,7 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk ruby  mono-devel unzip" && \
         --security --sec-severity=Important --sec-severity=Critical && \
     yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
-ENV SDP_DCAR_OWASP_DEP_CHK_VERSION dcar-0.6
+ENV SDP_DCAR_OWASP_DEP_CHK_VERSION dcar-0.7
 ENV OWASP_DEP_CHK_VERSION 5.3.1
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
