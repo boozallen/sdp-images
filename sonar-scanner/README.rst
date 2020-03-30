@@ -16,9 +16,7 @@ Synopsis
 Prereqs
 -------
 
-  This repo makes use of UBI8 as the base image for the container derived from `DCAR <https://dcar.dsop.io/>`_.
-  If DCAR is unavailable to you, using a `RedHat <https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8/ubi>`_ UBI image is a sufficient substitute.
-  .. note:: If substituting the image used, replace ``nexus-docker-secure.levelup-dev.io/opensource/openjdk/openjdk:1.8`` in the Dockerfile and Makefile for the image you are utilizing.
+  This repo makes use of UBI8 as the base image for the container derived from `RedHat <https://access.redhat.com/containers/#/registry.access.redhat.com/ubi8/ubi>`_.
   Additionally, this repo makes use of Docker for containers. If you do not wish to use Docker, please make edits to adapt to your implementation of container technology.
   Lastly, you should ensure all files from the repo are present in your local copy.
 
@@ -42,10 +40,10 @@ Dockerfile
 LICENSE
 -------
 
-  This is a text file containing the Booz Allen Public License. Please read before using or distibuting this repo.
+  This text file contains the Booz Allen Public License. Please read before using or distibuting this repo.
 
 Prebuild
 --------
 
-  This is a folder containing files and artifacts inherent to the creation of the container image.
+  This folder contains files and artifacts inherent to the creation of the container image.
   These files and artifacts are used either in the ``make build-dep`` command or in authenticating the dependency tarball associated with the image.
