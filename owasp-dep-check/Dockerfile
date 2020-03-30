@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi7/ubi:7.7-310
+FROM registry.access.redhat.com/ubi8/ubi:8.1
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: OWASP Dependency Container" \
@@ -61,7 +61,7 @@ RUN useradd -ms /bin/bash ${user}                                           && \
     mkdir /report                                                           && \
     chown -R ${user}:${user} /report                                        && \
     yum --nogpgcheck --disableplugin=subscription-manager clean all
- 
+
 USER ${user}
 
 VOLUME ["/src" "/usr/share/dependency-check/data" "/report"]
@@ -69,7 +69,3 @@ WORKDIR /src
 
 CMD ["--help"]
 ENTRYPOINT ["/usr/share/dependency-check/bin/dependency-check.sh"]
-
-
-    
-
