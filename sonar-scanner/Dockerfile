@@ -1,7 +1,7 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
 
-FROM nexus-docker-secure.levelup-dev.io/opensource/openjdk/openjdk:1.8
+FROM registry.access.redhat.com/ubi8/ubi:8.1
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Sonar Scanner" \
@@ -15,10 +15,10 @@ LABEL name="Solutions Delivery Platform: Sonar Scanner" \
 ### add licenses to this directory
 COPY LICENSE /licenses
 
-### openjdk images requires using yum as root user
+### Using yum as root user
 USER root
 ### Install packages
-RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed unzip which" && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed which" && \
     yum clean all &&\
     yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security --sec-severity=Important --sec-severity=Critical && \
@@ -53,8 +53,7 @@ COPY sonar-runner.properties /usr/share/${SONAR_SCANNER_FILE}/conf/sonar-scanner
 # ensure Sonar uses the provided Java for must instead of a borked glibc one
 RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /usr/share/${SONAR_SCANNER_FILE}/bin/sonar-scanner && \
     useradd -ms /bin/bash ${user}                                           && \
-    chown -R ${user}:${user} /usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux && \
-    chown -R ${user}:${user} /home/ubi
+    chown -R ${user}:${user} /usr/share/sonar-scanner-${SONAR_SCANNER_VERSION}-linux
 
 # Switch to non-root user
 USER ${user}
