@@ -1,6 +1,6 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
-FROM nexus-docker-secure.levelup-dev.io/redhat/ubi/ubi8:8.1
+FROM registry.access.redhat.com/ubi8/ubi:8.1
 MAINTAINER terrana_steven@bah.com
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
