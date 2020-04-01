@@ -12,7 +12,7 @@ LABEL name="Solutions Delivery Platform: Helm" \
       summary="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform" \
       description="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform"
 
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.5
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.8
 ARG user=sdp
 ARG group=sdp
 ARG uid=1000

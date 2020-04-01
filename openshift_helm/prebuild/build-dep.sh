@@ -27,7 +27,7 @@ rm -rf ${file2}.tar.gz
 #kubectl ${file3}
 curl -ko /root/prebuild/dependencies/${file3} https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 
-SDP_BUILD_DEPENDENCY_VERSION=dcar-0.5
+SDP_BUILD_DEPENDENCY_VERSION=dcar-0.8
 
 cd /root/prebuild
 tar czvf helm-dependencies-$SDP_BUILD_DEPENDENCY_VERSION.tar.gz dependencies
