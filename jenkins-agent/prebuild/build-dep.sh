@@ -2,9 +2,9 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-0.5
+JENKINS_AGENT_VERSION=dcar-0.8
 
-cd /root/prebuild 
+cd /root/prebuild
 tar czvf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz dependencies
 gpg --import /root/prebuild/BAH-public.key
 gpg --import --allow-secret-key-import  /root/prebuild/BAH-private.key
