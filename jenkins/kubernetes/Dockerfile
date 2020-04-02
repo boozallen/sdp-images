@@ -32,7 +32,7 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 ENV REF $REF
 
 # Use tini as subreaper in Docker container to adopt zombie processes
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.6
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.8
 ARG TINI_VERSION=v0.18.0
 
 # jenkins version being bundled in this docker image
@@ -58,8 +58,7 @@ RUN mkdir -p ${REF}/init.groovy.d
 
 ## Fetch Dependency bundle and verify signature
 
-#RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
-COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz
+RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.sig /root/tmp/.

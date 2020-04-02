@@ -41,6 +41,6 @@ RUN cd /root/tmp && tar -zxf ./${TARBALL}.tar.gz && rm -fv ./${TARBALL}.tar.gz &
     chmod +x /usr/local/bin/oc && \
     chmod +x /usr/local/bin/helm && \
     chmod +x /usr/local/bin/kubectl && \
-    cd - && rm -rf /root/tmp
+    cd - && rm -rf /root/tmp/*
 
 USER ${user}
