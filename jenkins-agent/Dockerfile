@@ -31,7 +31,6 @@ ENV JAVA_HOME /usr/lib/jvm/java
 # install docker
 RUN mkdir /root/tmp
 RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/${JENKINS_AGENT_VERSION}/jenkins-agent-dependencies-${JENKINS_AGENT_VERSION}.tar.gz
-
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig /root/tmp/.
 COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256 /root/tmp/.
