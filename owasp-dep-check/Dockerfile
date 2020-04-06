@@ -7,4 +7,4 @@ COPY container-entrypoint.sh ./container-entrypoint.sh
 RUN chmod +x ./container-entrypoint.sh 
 
 ENTRYPOINT ["./container-entrypoint.sh"]
-CMD[]
+CMD []
