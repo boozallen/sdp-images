@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1
+FROM registry.access.redhat.com/ubi8/ubi:8.1-406
 
 # this container must run as privileged
 USER root
@@ -17,14 +17,14 @@ COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
 RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup" && yum clean all &&\
-    yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
-        --security --sec-severity=Important --sec-severity=Critical && \
-    yum --nogpgcheck --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+    yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
+        --security && \
+    yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_AGENT_VERSION dcar-0.8
-ENV JENKINS_SWARM_VERSION 3.17
-ENV JNLP_SLAVE_VERSION 3.17
+ENV JENKINS_AGENT_VERSION dcar-0.9
+ENV JENKINS_SWARM_VERSION 3.19
+ENV JNLP_SLAVE_VERSION 3.19
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 

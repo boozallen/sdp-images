@@ -1,14 +1,14 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
 
-FROM registry.access.redhat.com/ubi8/ubi:8.1
+FROM registry.access.redhat.com/ubi8/ubi:8.1-406
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Sonar Scanner" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="3.0.3.778" \
-      release="3.0.3.778" \
+      version="4.3.0.2102" \
+      release="4.3.0.2102" \
       summary="A sonar-scanner container used by the SonarQube library of the Solutions Delivery Platform" \
       description="A sonar-scanner container used by the SonarQube library of the Solutions Delivery Platform"
 
@@ -20,13 +20,13 @@ USER root
 ### Install packages
 RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed which" && \
     yum clean all &&\
-    yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
-        --security --sec-severity=Important --sec-severity=Critical && \
-    yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+    yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
+        --security && \
+    yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### define necessary variables like PATH to application
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.8
-ARG SONAR_SCANNER_VERSION=3.0.3.778
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.9
+ARG SONAR_SCANNER_VERSION=4.3.0.2102
 ENV SONAR_SCANNER_FILE=sonar-scanner-${SONAR_SCANNER_VERSION}-linux
 ENV TARBALL=sonar-scanner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 ENV user=sonarscanner
