@@ -1,11 +1,11 @@
-FROM registry.access.redhat.com/ubi7/ubi:7.7-310
+FROM registry.access.redhat.com/ubi8/ubi:8.1-408
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Master" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="2.204.2" \
-      release="2.204.2" \
+      version="2.222.1" \
+      release="2.222.1" \
       summary="A Jenkins Master container" \
       description="The Jenkins Master container image for the Solutions Delivery Platform"
 
@@ -13,10 +13,10 @@ LABEL name="Solutions Delivery Platform: Jenkins Master" \
 ### add licenses to this directory
 COPY LICENSE /licenses
 
-RUN INSTALL_PKGS="java-1.8.0-openjdk" && \
-    yum --nogpgcheck --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
-        --security --sec-severity=Important --sec-severity=Critical && \
-    yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+RUN INSTALL_PKGS="java-1.8.0-openjdk git openssh" && \
+    yum -y update-minimal --setopt=tsflags=nodocs \
+        --security  && \
+    yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ARG user=jenkins
 ARG group=jenkins
@@ -32,12 +32,12 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 ENV REF $REF
 
 # Use tini as subreaper in Docker container to adopt zombie processes
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.8
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.9
 ARG TINI_VERSION=v0.18.0
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.204.2}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.222.1}
 
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
@@ -58,7 +58,7 @@ RUN mkdir -p ${REF}/init.groovy.d
 
 ## Fetch Dependency bundle and verify signature
 
-RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
+RUN mkdir /root/tmp && curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.sig /root/tmp/.

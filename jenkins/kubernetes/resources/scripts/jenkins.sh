@@ -8,7 +8,7 @@ touch "${COPY_REFERENCE_FILE_LOG}" || { echo "Can not write to ${COPY_REFERENCE_
 echo "--- Copying files at $(date)" >> "$COPY_REFERENCE_FILE_LOG"
 find "${REF}" \( -type f -o -type l \) -exec bash -c '. /usr/local/bin/jenkins-support; for arg; do copy_reference_file "$arg"; done' _ {} +
 
-mkdir ${JENKINS_HOME}/plugins
+mkdir -p ${JENKINS_HOME}/plugins
 cp /tmp/plugins/* ${JENKINS_HOME}/plugins
 rm -rf /tmp/plugins
 
