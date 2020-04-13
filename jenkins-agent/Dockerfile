@@ -3,12 +3,14 @@ FROM registry.access.redhat.com/ubi8/ubi:8.1-406
 # this container must run as privileged
 USER root
 
+ENV JENKINS_AGENT_VERSION dcar-0.9
+
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="dcar-0.8" \
-      release="dcar-0.8" \
+      version="${JENKINS_AGENT_VERSION}" \
+      release="${JENKINS_AGENT_VERSION}" \
       summary="A Jenkins Build Agent container" \
       description="The Jenkins Build Agent container image for the Solutions Delivery Platform"
 
@@ -22,9 +24,8 @@ RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-ope
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_AGENT_VERSION dcar-0.9
 ENV JENKINS_SWARM_VERSION 3.19
-ENV JNLP_SLAVE_VERSION 3.19
+ENV JNLP_SLAVE_VERSION 3.17
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
