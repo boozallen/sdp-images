@@ -4,7 +4,7 @@ set -xe
 
 JENKINS_AGENT_VERSION=dcar-0.9
 JENKINS_SWARM_VERSION=3.19
-JNLP_SLAVE_VERSION=3.17
+JNLP_SLAVE_VERSION=4.3
 
 rm -rf /root/prebuild/dependencies
 mkdir -p /root/prebuild/dependencies/swarm-client /root/prebuild/dependencies/agent /root/prebuild/dependencies/docker-ce /root/prebuild/dependencies/docker-compose /root/prebuild/dependencies/supervisor /root/prebuild/dependencies/hostname

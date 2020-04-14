@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1-406
+FROM registry.access.redhat.com/ubi8/ubi:8.1-408
 
 # this container must run as privileged
 USER root
@@ -18,14 +18,14 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup" && yum clean all &&\
+RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup diffutils" && yum clean all &&\
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security && \
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
 ENV JENKINS_SWARM_VERSION 3.19
-ENV JNLP_SLAVE_VERSION 3.17
+ENV JNLP_SLAVE_VERSION 4.3
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
