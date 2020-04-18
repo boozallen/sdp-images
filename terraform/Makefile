@@ -1,6 +1,6 @@
 OWNER    = boozallen
 REPO     = sdp-images
-IMAGE    = zap
+IMAGE    = terraform
 VERSION  = 1.0
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
