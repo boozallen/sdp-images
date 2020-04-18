@@ -1,4 +1,4 @@
-FROM owasp/dependency-check:5.2.1
+FROM owasp/dependency-check:5.3.2
 LABEL maintainer "boozallen" 
 
 USER root 
