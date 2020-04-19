@@ -3,8 +3,13 @@
 
 FROM hashicorp/terraform:light
 
-ENV SYSDIG_PROVIDER_VERSION=v0.2.0
+COPY docker-entrypoint.sh docker-entrypoint.sh
+RUN chmod +x docker-entrypoint.sh 
 
+ENV SYSDIG_PROVIDER_VERSION=v0.2.0
 RUN mkdir -p /plugins && \
     wget -O /plugins/terraform-provider-sysdig_$SYSDIG_PROVIDER_VERSION https://github.com/draios/terraform-provider-sysdig/releases/download/$SYSDIG_PROVIDER_VERSION/terraform-provider-sysdig-linux-amd64 && \
     chmod 777 /plugins/*
+
+ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]
+CMD []
