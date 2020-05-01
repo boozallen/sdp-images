@@ -4,8 +4,8 @@ FROM registry.access.redhat.com/ubi7/ubi:7.7-310
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="dcar-0.9" \
-      release="dcar-0.9" \
+      version="dcar-1.0" \
+      release="dcar-1.0" \
       summary="A Jenkins Build Agent container" \
       description="The Jenkins Build Agent container image for the Solutions Delivery Platform"
 
@@ -19,7 +19,7 @@ RUN INSTALL_PKGS="yum-utils tar hostname device-mapper-persistent-data lvm2 java
     yum --nogpgcheck  --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_AGENT_VERSION dcar-0.9
+ENV JENKINS_AGENT_VERSION dcar-1.0
 ENV JENKINS_SWARM_VERSION 3.19
 ENV JNLP_SLAVE_VERSION 4.3
 ENV HOME /root
@@ -30,7 +30,7 @@ USER root
 
 # install docker
 RUN mkdir /root/tmp
-COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
+RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/${JENKINS_AGENT_VERSION}/jenkins-agent-dependencies-${JENKINS_AGENT_VERSION}.tar.gz
 
 #COPY prebuild/BAH-public.key /root/tmp/.
 #COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig /root/tmp/.
