@@ -1,9 +1,9 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1-408
+FROM registry.access.redhat.com/ubi8/ubi:8.2
 
 # this container must run as privileged
 USER root
 
-ENV JENKINS_AGENT_VERSION dcar-0.9
+ENV JENKINS_AGENT_VERSION dcar-1.1
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
