@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1-408
+FROM registry.access.redhat.com/ubi8/ubi:8.2
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
@@ -17,7 +17,7 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk-devel ruby  unzip" && \
     yum -y update-minimal --setopt=tsflags=nodocs --security  && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
-ENV SDP_DCAR_OWASP_DEP_CHK_VERSION dcar-0.9
+ENV SDP_DCAR_OWASP_DEP_CHK_VERSION dcar-1.1
 ENV OWASP_DEP_CHK_VERSION 5.3.2
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java

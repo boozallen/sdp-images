@@ -2,7 +2,7 @@
 
 set -xe
 
-SDP_DCAR_OWASP_DEP_CHK_VERSION=dcar-0.9
+SDP_DCAR_OWASP_DEP_CHK_VERSION=dcar-1.1
 
 cd /root/prebuild 
 tar czvf owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz dependencies
