@@ -13,7 +13,7 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="java-1.8.0-openjdk-devel ruby  unzip" && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk-devel ruby " && \
     yum -y update-minimal --setopt=tsflags=nodocs --security  && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
@@ -27,7 +27,6 @@ ARG user=dependencycheck
 # Pull dependencies from sdp-images release artifacts and verify contents
 RUN mkdir /root/tmp
 RUN curl -sSLo /root/tmp/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/$SDP_DCAR_OWASP_DEP_CHK_VERSION/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
-
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sig /root/tmp/.
@@ -44,7 +43,9 @@ RUN cd /root/tmp && tar -xzf owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CH
     rm -rf /usr/local/share/gems/gems/rubygems-update-2.7.10/test && \
     gem cleanup
 
-RUN cd /root/tmp && rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/mono-complete/*.rpm
+RUN cd /root/tmp && yum install -y /root/tmp/dependencies/mono-complete/*.rpm
+
+
 
 RUN cd /root/tmp/dependencies/owasp && \
     unzip dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip    && \
@@ -58,12 +59,18 @@ RUN useradd -ms /bin/bash ${user}                                           && \
     mkdir /report                                                           && \
     chown -R ${user}:${user} /report                                        && \
     yum --nogpgcheck --disableplugin=subscription-manager clean all
+
+### Insert Container Entry Point Script
+COPY container-entrypoint.sh /usr/share/dependency-check/bin/container-entrypoint.sh
+
+### Set script as executable
+RUN chmod +x /usr/share/dependency-check/bin/container-entrypoint.sh
  
 USER ${user}
 
 VOLUME ["/src" "/usr/share/dependency-check/data" "/report"]
 WORKDIR /src
 
-CMD ["--help"]
-ENTRYPOINT ["/usr/share/dependency-check/bin/dependency-check.sh"]
+CMD []
+ENTRYPOINT [ "/bin/sh", "/usr/share/dependency-check/bin/container-entrypoint.sh" ]
 
