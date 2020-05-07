@@ -27,6 +27,7 @@ ARG user=dependencycheck
 # Pull dependencies from sdp-images release artifacts and verify contents
 RUN mkdir /root/tmp
 RUN curl -sSLo /root/tmp/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/$SDP_DCAR_OWASP_DEP_CHK_VERSION/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
+#COPY owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz /root/tmp/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CHK_VERSION.sig /root/tmp/.
@@ -43,7 +44,7 @@ RUN cd /root/tmp && tar -xzf owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CH
     rm -rf /usr/local/share/gems/gems/rubygems-update-2.7.10/test && \
     gem cleanup
 
-RUN cd /root/tmp && yum install -y /root/tmp/dependencies/mono-complete/*.rpm
+RUN cd /root/tmp && rpm -ivh --replacepkgs --replacefiles --force  /root/tmp/dependencies/mono-complete/*.rpm
 
 
 
