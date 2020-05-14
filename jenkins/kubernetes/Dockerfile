@@ -1,11 +1,11 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1-408
+FROM registry.access.redhat.com/ubi8/ubi:8.2
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Master" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="2.222.1" \
-      release="2.222.1" \
+      version="2.222.3" \
+      release="2.222.3" \
       summary="A Jenkins Master container" \
       description="The Jenkins Master container image for the Solutions Delivery Platform"
 
@@ -32,12 +32,12 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 ENV REF $REF
 
 # Use tini as subreaper in Docker container to adopt zombie processes
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.9
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.1
 ARG TINI_VERSION=v0.18.0
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.222.1}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.222.3}
 
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
@@ -59,6 +59,7 @@ RUN mkdir -p ${REF}/init.groovy.d
 ## Fetch Dependency bundle and verify signature
 
 RUN mkdir /root/tmp && curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
+
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.sig /root/tmp/.
