@@ -1,6 +1,6 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
-FROM registry.access.redhat.com/ubi8/ubi:8.1
+FROM registry.access.redhat.com/ubi8/ubi:8.2
 MAINTAINER terrana_steven@bah.com
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
@@ -12,7 +12,7 @@ LABEL name="Solutions Delivery Platform: Helm" \
       summary="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform" \
       description="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform"
 
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-0.8
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.1
 ARG user=sdp
 ARG group=sdp
 ARG uid=1000
