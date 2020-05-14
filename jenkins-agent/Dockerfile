@@ -40,7 +40,7 @@ RUN cd /root/tmp/ && gpg --import BAH-public.key
 RUN cd /root/tmp/ && gpg --verify jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 RUN cd /root/tmp/  && echo "$(cat jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256) jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz && \
-    rpm -ivh --force --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
+    rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
 
 RUN ls /root/tmp/dependencies/docker-compose/
 RUN pip3 install supervisor -f /root/tmp/dependencies/supervisor/. --no-index
