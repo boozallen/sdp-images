@@ -2,4 +2,4 @@
 default-sdp
 -------------
 
-A container image that contains common packages and is the default container image used by sdp library 
+An UBI based  container image that contains commonly used utilities and is the default container image used by sdp library 
