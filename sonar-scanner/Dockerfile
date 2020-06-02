@@ -38,11 +38,9 @@ ENV SONAR_RUNNER_HOME=/usr/share/${SONAR_SCANNER_FILE}
 ENV PATH $PATH:/usr/share/${SONAR_SCANNER_FILE}/bin
 
 ### Install Sonar Scanner
-# Make a directory to store temporary files, will be deleted once installation is finished
 RUN mkdir /root/tmp
-# Download dependency tarball from releases
 RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
-# Copy authentication files into the temporary folder to check tarball
+#COPY ${TARBALL}.tar.gz /root/tmp/${TARBALL}.tar.gz
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/${TARBALL}.sig /root/tmp/.
 COPY prebuild/${TARBALL}.sha256 /root/tmp/.
