@@ -1,4 +1,7 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.2
+ARG BASE_REGISTRY=registry.access.redhat.com
+ARG BASE_IMAGE=ubi8/ubi
+ARG BASE_TAG=8.2
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Master" \
@@ -75,7 +78,7 @@ RUN  cp /root/tmp/dependencies/tini/tini-$TINI_VERSION /sbin/tini \
   && chmod +x /sbin/tini
 
 ## Install Jenkins war
-RUN cp /root/tmp/dependencies/jenkins/jenkins-war-$JENKINS_VERSION.war /usr/share/jenkins/jenkins.war 
+RUN cp /root/tmp/dependencies/jenkins/jenkins-war-$JENKINS_VERSION.war /usr/share/jenkins/jenkins.war
 
 ## Place plugins in temp directory
 RUN mkdir /tmp/plugins && cp /root/tmp/dependencies/plugins/* /tmp/plugins && chown -R ${uid}:${gid} /tmp/plugins && rm -rf /root/tmp/*
@@ -102,4 +105,3 @@ RUN chmod +x /usr/local/bin/jenkins-support /usr/local/bin/jenkins.sh /bin/tini 
 USER ${user}
 HEALTHCHECK --interval=30s --timeout=30s --start-period=10s --retries=3 CMD pgrep -f "jenkins"
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
-

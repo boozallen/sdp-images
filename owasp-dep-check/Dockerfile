@@ -1,4 +1,7 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.2
+ARG BASE_REGISTRY=registry.access.redhat.com
+ARG BASE_IMAGE=ubi8/ubi
+ARG BASE_TAG=8.2
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
@@ -66,7 +69,7 @@ COPY container-entrypoint.sh /usr/share/dependency-check/bin/container-entrypoin
 
 ### Set script as executable
 RUN chmod +x /usr/share/dependency-check/bin/container-entrypoint.sh
- 
+
 USER ${user}
 
 VOLUME ["/src" "/usr/share/dependency-check/data" "/report"]
@@ -74,4 +77,3 @@ WORKDIR /src
 
 CMD []
 ENTRYPOINT [ "/bin/sh", "/usr/share/dependency-check/bin/container-entrypoint.sh" ]
-
