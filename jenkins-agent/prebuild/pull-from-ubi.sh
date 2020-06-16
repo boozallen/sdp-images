@@ -2,8 +2,8 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-1.1
-JENKINS_SWARM_VERSION=3.19
+JENKINS_AGENT_VERSION=dcar-1.2
+JENKINS_SWARM_VERSION=3.21
 JNLP_SLAVE_VERSION=4.3
 
 curl --create-dirs -sSLo /root/prebuild/dependencies/swarm-client/swarm-client-${JENKINS_SWARM_VERSION}.jar http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${JENKINS_SWARM_VERSION}/swarm-client-${JENKINS_SWARM_VERSION}.jar

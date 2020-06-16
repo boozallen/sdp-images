@@ -6,7 +6,7 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 # this container must run as privileged
 USER root
 
-ENV JENKINS_AGENT_VERSION dcar-1.1
+ENV JENKINS_AGENT_VERSION dcar-1.2
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
@@ -27,7 +27,7 @@ RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-ope
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_SWARM_VERSION 3.19
+ENV JENKINS_SWARM_VERSION 3.21
 ENV JNLP_SLAVE_VERSION 4.3
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
