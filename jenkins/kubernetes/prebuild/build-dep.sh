@@ -2,9 +2,9 @@
 
 set -xe
 
-SDP_BUILD_DEPENDENCY_VERSION=dcar-1.1
+SDP_BUILD_DEPENDENCY_VERSION=dcar-1.2
 
-cd /root/prebuild 
+cd /root/prebuild
 tar czvf jenkins-dependencies-$SDP_BUILD_DEPENDENCY_VERSION.tar.gz dependencies
 gpg --import /root/prebuild/BAH-public.key
 gpg --import --allow-secret-key-import  /root/prebuild/BAH-private.key

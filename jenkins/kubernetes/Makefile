@@ -1,42 +1,41 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = jenkins
-VERSION  = dcar-1.1
-JENKINS_VERSION=2.222.3
+VERSION  = dcar-1.2
+JENKINS_VERSION=2.222.4
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
-.PHONY: help Makefile 
-.ONESHELL: push 
+.PHONY: help Makefile
+.ONESHELL: push
 
 
 # Put it first so that "make" without argument is like "make help".
 help: ## Show target options
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-build: ## build container image 
+build: ## build container image
 	docker build . -t $(TAG)
 
-push: ## builds and publishes container image 
+push: ## builds and publishes container image
 	$(eval user := $(shell read -p "GitHub Username: " username; echo $$username))
 	$(eval pass := $(shell read -s -r -p "GitHub Token: " token; echo $$token))
-	@echo 
-	@docker login $(REGISTRY) -u $(user) -p $(pass); 
-	make build 
+	@echo
+	@docker login $(REGISTRY) -u $(user) -p $(pass);
+	make build
 	docker push $(TAG)
 
-build-dep: ## build container dependencies 
+build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))
 	docker run -it -v $(dir)/prebuild:/var/jenkins_home/tmp jenkins/jenkins:${JENKINS_VERSION} /var/jenkins_home/tmp/pull-plugins.sh
 	docker run -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.1-408 /root/prebuild/pull-from-centos.sh
-	docker run -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.1-408 /root/prebuild/build-dep.sh 
+	docker run -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.1-408 /root/prebuild/build-dep.sh
 
-info: 
+info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	echo "Make command $@ not found" 
-
+	echo "Make command $@ not found"

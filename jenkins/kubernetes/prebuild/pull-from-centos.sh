@@ -3,15 +3,15 @@
 set -xe
 
 
-TINI_VERSION=v0.18.0
-JENKINS_VERSION=2.222.3
+TINI_VERSION=v0.19.0
+JENKINS_VERSION=2.222.4
 
 mkdir /root/prebuild/dependencies/tini/
 curl -kfsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-amd64 -o /root/prebuild/dependencies/tini/tini-${TINI_VERSION}
 
-curl -fsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-amd64.asc -o /root/tini.asc 
+curl -fsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-amd64.asc -o /root/tini.asc
 
-gpg --no-tty --import /root/prebuild/tini_pub.gpg 
+gpg --no-tty --import /root/prebuild/tini_pub.gpg
 gpg --verify /root/tini.asc  /root/prebuild/dependencies/tini/tini-${TINI_VERSION}
 
 
@@ -23,4 +23,3 @@ JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/$
 
 mkdir /root/prebuild/dependencies/jenkins/
 curl -kfsSL ${JENKINS_URL} -o /root/prebuild/dependencies/jenkins/jenkins-war-${JENKINS_VERSION}.war
-
