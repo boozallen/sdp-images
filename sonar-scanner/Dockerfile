@@ -39,8 +39,8 @@ ENV PATH $PATH:/usr/share/${SONAR_SCANNER_FILE}/bin
 
 ### Install Sonar Scanner
 RUN mkdir /root/tmp
-#RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
-COPY prebuild/${TARBALL}.tar.gz /root/tmp/${TARBALL}.tar.gz
+RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
+#COPY ${TARBALL}.tar.gz /root/tmp/${TARBALL}.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/${TARBALL}.sig /root/tmp/.
