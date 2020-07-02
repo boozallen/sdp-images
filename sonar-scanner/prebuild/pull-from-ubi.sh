@@ -2,7 +2,7 @@
 
 set -xe
 
-SONAR_SCANNER_VERSION=4.3.0.2102
+SONAR_SCANNER_VERSION=4.4.0.2170
 
 rm -rf /root/prebuild/dependencies
 mkdir -p /root/prebuild/dependencies/sonar-scanner

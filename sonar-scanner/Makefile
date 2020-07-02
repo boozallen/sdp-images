@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = sonar-scanner
-VERSION  = 3.0.3.778
+VERSION  = 4.4.0.2170
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
