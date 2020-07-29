@@ -13,7 +13,8 @@ RUN apk add --no-cache \
 # Tell Puppeteer to skip installing Chrome. We’ll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
   PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
-  CHROMIUM_FLAGS=“--no-sandbox --headless”
+  CHROMIUM_FLAGS="--no-sandbox --headless" \
+  HINT_TELEMETRY=off
 
 RUN npm i -g puppeteer@5.2.1 hint --silent --no-warnings
 
