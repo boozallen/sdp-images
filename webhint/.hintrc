@@ -1,3 +1,6 @@
 {
-    "formatters": ["json"],
+    "extends": [
+        "accessibility"
+    ],
+    "formatters": ["json"]
 }
