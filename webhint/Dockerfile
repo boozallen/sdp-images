@@ -32,5 +32,3 @@ RUN set -x \
     && npm -v \
     && npx -v \
     && hint -v
-
-COPY .hintrc /hint/
