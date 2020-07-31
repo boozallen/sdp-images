@@ -1,7 +1,7 @@
 OWNER    = johnson-jesse
 REPO     = sdp-images
 IMAGE    = webhint
-VERSION  = 1.1
+VERSION  = 1.9
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
