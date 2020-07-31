@@ -1,4 +1,4 @@
-OWNER    = johnson-jesse
+OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = webhint
 VERSION  = 1.9
