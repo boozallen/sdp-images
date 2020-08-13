@@ -2,7 +2,7 @@
 
 set -xe
 
-SDP_BUILD_DEPENDENCY_VERSION=dcar-1.3
+SDP_BUILD_DEPENDENCY_VERSION=dcar-1.4
 
 cd /root/prebuild
 tar czvf jenkins-dependencies-$SDP_BUILD_DEPENDENCY_VERSION.tar.gz dependencies
