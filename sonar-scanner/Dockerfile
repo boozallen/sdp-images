@@ -3,20 +3,20 @@
 
 FROM openjdk:8-alpine
 
-ENV SONAR_RUNNER_HOME=/root/sonar-scanner-3.0.3.778-linux
-ENV PATH $PATH:/root/sonar-scanner-3.0.3.778-linux/bin
+ENV SONAR_RUNNER_HOME=/root/sonar-scanner-4.0.0.1744-linux
+ENV PATH $PATH:/root/sonar-scanner-4.0.0.1744-linux/bin
 
 WORKDIR /root
 
 RUN apk add --no-cache curl grep sed unzip nodejs npm && \
-    curl --insecure -o ./sonarscanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.0.3.778-linux.zip && \
+    curl --insecure -o ./sonarscanner.zip -L https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.0.0.1744-linux.zip && \
     unzip sonarscanner.zip && \
     rm sonarscanner.zip
 
-COPY sonar-runner.properties ./sonar-scanner-3.0.3.778-linux/conf/sonar-scanner.properties
+COPY sonar-runner.properties ./sonar-scanner-4.0.0.1744-linux/conf/sonar-scanner.properties
 
 #   ensure Sonar uses the provided Java for must instead of a borked glibc one
-RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /root/sonar-scanner-3.0.3.778-linux/bin/sonar-scanner
+RUN sed -i 's/use_embedded_jre=true/use_embedded_jre=false/g' /root/sonar-scanner-4.0.0.1744-linux/bin/sonar-scanner
 
 # Use bash if you want to run the environment from inside the shell, otherwise use the command that actually runs the underlying stuff
 #CMD /bin/bash
