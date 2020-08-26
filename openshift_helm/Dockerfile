@@ -15,7 +15,7 @@ LABEL name="Solutions Delivery Platform: Helm" \
       summary="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform" \
       description="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform"
 
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.2
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.4
 ARG user=sdp
 ARG group=sdp
 ARG uid=1000
@@ -29,8 +29,8 @@ RUN mkdir -p $SDP_HOME \
 ### Download dependency tarball and authenticate
 ARG TARBALL=helm-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 RUN mkdir /root/tmp
-RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
-#COPY ${TARBALL}.tar.gz root/tmp/${TARBALL}.tar.gz
+#RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
+COPY prebuild/${TARBALL}.tar.gz root/tmp/${TARBALL}.tar.gz
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/${TARBALL}.sig /root/tmp/.
 COPY prebuild/${TARBALL}.sha256 /root/tmp/.
