@@ -62,8 +62,8 @@ RUN mkdir -p ${REF}/init.groovy.d
 ## Fetch Dependency bundle and verify signature
 
 RUN mkdir /root/tmp
-#RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
-COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz /root/tmp/jenkins-dependencies-$JENKINS_VERSION.tar.gz
+RUN curl -sSLo /root/tmp/jenkins-dependencies-${JENKINS_VERSION}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
+#COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz /root/tmp/jenkins-dependencies-$JENKINS_VERSION.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.sig /root/tmp/.
