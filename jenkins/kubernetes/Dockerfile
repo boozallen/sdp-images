@@ -7,8 +7,8 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: Jenkins Master" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="2.235.5" \
-      release="2.235.5" \
+      version="2.249.1" \
+      release="2.249.1" \
       summary="A Jenkins Master container" \
       description="The Jenkins Master container image for the Solutions Delivery Platform"
 
@@ -35,12 +35,12 @@ ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
 ENV REF $REF
 
 # Use tini as subreaper in Docker container to adopt zombie processes
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.5
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.6
 ARG TINI_VERSION=v0.19.0
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.235.5}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.249.1}
 
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
