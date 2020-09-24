@@ -23,8 +23,8 @@ RUN INSTALL_PKGS="yum-utils device-mapper-persistent-data lvm2 java-1.8.0-openjd
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_SWARM_VERSION 3.9
-ENV JNLP_SLAVE_VERSION 3.9
+ENV JENKINS_SWARM_VERSION 3.23
+ENV JNLP_SLAVE_VERSION 4.5
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
