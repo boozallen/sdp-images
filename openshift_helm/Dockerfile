@@ -1,45 +1,51 @@
 # Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
+ARG BASE_REGISTRY=registry.access.redhat.com
+ARG BASE_IMAGE=ubi8/ubi
+ARG BASE_TAG=8.2
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
+MAINTAINER terrana_steven@bah.com
 
-FROM alpine
+### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
+LABEL name="Solutions Delivery Platform: Helm" \
+      maintainer="terrana_steven@bah.com" \
+      vendor="Booz Allen Hamilton" \
+      version="1.0" \
+      release="1.0" \
+      summary="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform" \
+      description="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform"
 
-RUN apk add --no-cache \
-    openssl \
-    git \
-    openjdk8 \
-    curl \
-    bash \
-    openssh-client \
-    unzip \
-    bash \
-    ttf-dejavu \
-    coreutils \
-    iptables \
-    ip6tables \
-    ipset \
-    iproute2 \
-    python \
-    py-pip \
-    groff \
-    less \
-    mailcap
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.4
+ARG user=sdp
+ARG group=sdp
+ARG uid=1000
+ARG gid=1000
+ARG SDP_HOME=/home/sdp_home
+RUN mkdir -p $SDP_HOME \
+  && chown ${uid}:${gid} $SDP_HOME \
+  && groupadd -g ${gid} ${group} \
+  && useradd -d "$SDP_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-# install oc client
-RUN apk add --no-cache ca-certificates wget openssl curl && update-ca-certificates && \
-    curl -o glibc.apk -L "https://github.com/andyshinn/alpine-pkg-glibc/releases/download/2.23-r1/glibc-2.23-r1.apk" && \
-    apk add --allow-untrusted glibc.apk && \
-    curl -o glibc-bin.apk -L "https://github.com/andyshinn/alpine-pkg-glibc/releases/download/2.23-r1/glibc-bin-2.23-r1.apk" && \
-    apk add --allow-untrusted glibc-bin.apk && \
-    /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc/usr/lib && \
-    echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
-    rm -f glibc.apk glibc-bin.apk 
+### Download dependency tarball and authenticate
+ARG TARBALL=helm-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
+RUN mkdir /root/tmp
+RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
+#COPY prebuild/${TARBALL}.tar.gz root/tmp/${TARBALL}.tar.gz
+COPY prebuild/BAH-public.key /root/tmp/.
+COPY prebuild/${TARBALL}.sig /root/tmp/.
+COPY prebuild/${TARBALL}.sha256 /root/tmp/.
+RUN cd /root/tmp/ && gpg --import BAH-public.key
+RUN cd /root/tmp/ && gpg --verify ${TARBALL}.sig ${TARBALL}.tar.gz
+RUN cd /root/tmp/ && echo "$(cat ${TARBALL}.sha256) ${TARBALL}.tar.gz" | sha256sum --check --status
 
-RUN mkdir -p /tmp/oc-client && cd /tmp/oc-client && \
-    wget -O oc-client.tar.gz https://github.com/openshift/origin/releases/download/v3.6.1/openshift-origin-client-tools-v3.6.1-008f2d5-linux-64bit.tar.gz && \
-    tar -xvf oc-client.tar.gz && \
-    mv */oc /usr/local/bin/oc
+###Unpack tarball containing dependencies && place files into needed locations
+RUN cd /root/tmp && tar -zxf ./${TARBALL}.tar.gz && rm -fv ./${TARBALL}.tar.gz && \
+    mv dependencies/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc /usr/local/bin/oc && \
+    mv dependencies/linux-amd64/helm /usr/local/bin/helm && \
+    mv dependencies/kubectl /usr/local/bin/kubectl && \
+    chmod +x /usr/local/bin/oc && \
+    chmod +x /usr/local/bin/helm && \
+    chmod +x /usr/local/bin/kubectl && \
+    cd - && rm -rf /root/tmp/*
 
-RUN curl -kLO https://git.io/get_helm.sh && \
-    chmod 700 ./get_helm.sh && \
-    sh ./get_helm.sh --version v2.8.2 && \
-    rm -rf /var/cache/apk/*
+USER ${user}
