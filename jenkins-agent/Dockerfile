@@ -1,7 +1,4 @@
-ARG BASE_REGISTRY=registry.access.redhat.com
-ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.2
-FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
+FROM centos:7
 
 # this container must run as privileged
 USER root
@@ -21,35 +18,25 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup diffutils" && yum clean all &&\
-    yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
-        --security && \
-    yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+RUN INSTALL_PKGS="tar hostname yum-utils device-mapper-persistent-data lvm2 java-1.8.0-openjdk git openssl scl-utils python3 python36 python36-devel iptables xz libcgroup diffutils" && yum clean all &&\
+    yum -y update-minimal --setopt=tsflags=nodocs --security && \
+    yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_SWARM_VERSION 3.22
+ENV JENKINS_SWARM_VERSION 3.23
 ENV JNLP_SLAVE_VERSION 4.5
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
+ENV LC_ALL "en_US.UTF-8"
 
-# install docker
-RUN mkdir /root/tmp
-RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/${JENKINS_AGENT_VERSION}/jenkins-agent-dependencies-${JENKINS_AGENT_VERSION}.tar.gz
-#COPY jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
+RUN yum remove docker docker-common docker-selinux docker-engine && \
+    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
+    yum install -y docker-ce && \
+    curl --create-dirs -sSLo /opt/jenkins-agent/bin/swarm-client-$JENKINS_SWARM_VERSION.jar http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION.jar && \
+    curl --create-dirs -sSLo /opt/jenkins-agent/bin/agent.jar http://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/$JNLP_SLAVE_VERSION/remoting-$JNLP_SLAVE_VERSION.jar
 
-COPY prebuild/BAH-public.key /root/tmp/.
-COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig /root/tmp/.
-COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256 /root/tmp/.
 
-RUN cd /root/tmp/ && gpg --import BAH-public.key
-RUN cd /root/tmp/ && gpg --verify jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
-RUN cd /root/tmp/  && echo "$(cat jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256) jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz" | sha256sum --check --status
-RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz && \
-    rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
-
-RUN ls /root/tmp/dependencies/docker-compose/
-RUN pip3 install supervisor -f /root/tmp/dependencies/supervisor/. --no-index
-RUN pip3 install docker-compose -f /root/tmp/dependencies/docker-compose/. --no-index
+RUN pip3 install supervisor docker-compose
 
 RUN mkdir -p /opt/jenkins-agent/bin ${HOME}
 
@@ -59,8 +46,6 @@ RUN chmod 777 /opt/jenkins-agent/bin/jenkins-agent
 RUN chmod +x /opt/jenkins-agent/bin/jenkins-agent
 
 # Download plugin and modify permissions
-RUN cp /root/tmp/dependencies/swarm-client/swarm-client-$JENKINS_SWARM_VERSION.jar /opt/jenkins-agent/bin/swarm-client-$JENKINS_SWARM_VERSION.jar && cp /root/tmp/dependencies/agent/remoting-$JNLP_SLAVE_VERSION.jar /opt/jenkins-agent/bin/agent.jar
-
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ENTRYPOINT []
