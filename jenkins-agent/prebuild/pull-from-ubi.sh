@@ -2,9 +2,9 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-1.3
-JENKINS_SWARM_VERSION=3.22
-JNLP_SLAVE_VERSION=4.5
+JENKINS_AGENT_VERSION=dcar-1.6
+JENKINS_SWARM_VERSION=3.24
+JNLP_SLAVE_VERSION=4.6
 
 curl --create-dirs -sSLo /root/prebuild/dependencies/swarm-client/swarm-client-${JENKINS_SWARM_VERSION}.jar http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${JENKINS_SWARM_VERSION}/swarm-client-${JENKINS_SWARM_VERSION}.jar
 curl --create-dirs -sSLo /root/prebuild/dependencies/agent/remoting-${JNLP_SLAVE_VERSION}.jar http://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${JNLP_SLAVE_VERSION}/remoting-${JNLP_SLAVE_VERSION}.jar

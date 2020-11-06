@@ -6,7 +6,7 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 # this container must run as privileged
 USER root
 
-ENV JENKINS_AGENT_VERSION dcar-1.3
+ENV JENKINS_AGENT_VERSION dcar-1.6
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
@@ -27,15 +27,15 @@ RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-ope
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_SWARM_VERSION 3.22
-ENV JNLP_SLAVE_VERSION 4.5
+ENV JENKINS_SWARM_VERSION 3.24
+ENV JNLP_SLAVE_VERSION 4.6
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
 # install docker
 RUN mkdir /root/tmp
 RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/${JENKINS_AGENT_VERSION}/jenkins-agent-dependencies-${JENKINS_AGENT_VERSION}.tar.gz
-#COPY jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
+#COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig /root/tmp/.
@@ -45,6 +45,8 @@ RUN cd /root/tmp/ && gpg --import BAH-public.key
 RUN cd /root/tmp/ && gpg --verify jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 RUN cd /root/tmp/  && echo "$(cat jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256) jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz && \
+    rm -f /root/tmp/dependencies/docker-ce/gnutls-3.6.8-11.el8_2.x86_64.rpm && \
+    rm -f /root/tmp/dependencies/docker-ce/crypto-policies-20200713-1.git51d1222.el8.noarch.rpm && \
     rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
 
 RUN ls /root/tmp/dependencies/docker-compose/

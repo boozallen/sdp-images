@@ -2,7 +2,7 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-1.3
+JENKINS_AGENT_VERSION=dcar-1.6
 
 cd /root/prebuild
 tar czvf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz dependencies
