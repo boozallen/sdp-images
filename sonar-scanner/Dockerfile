@@ -3,7 +3,7 @@
 
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.2
+ARG BASE_TAG=8.3
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 
@@ -11,8 +11,8 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: Sonar Scanner" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="4.4.0.2170" \
-      release="4.4.0.2170" \
+      version="4.5.0.2216" \
+      release="4.5.0.2216" \
       summary="A sonar-scanner container used by the SonarQube library of the Solutions Delivery Platform" \
       description="A sonar-scanner container used by the SonarQube library of the Solutions Delivery Platform"
 
@@ -29,8 +29,8 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed which" && \
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### define necessary variables like PATH to application
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.2
-ARG SONAR_SCANNER_VERSION=4.4.0.2170
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.7
+ARG SONAR_SCANNER_VERSION=4.5.0.2216
 ENV SONAR_SCANNER_FILE=sonar-scanner-${SONAR_SCANNER_VERSION}-linux
 ENV TARBALL=sonar-scanner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 ENV user=sonarscanner
@@ -40,7 +40,7 @@ ENV PATH $PATH:/usr/share/${SONAR_SCANNER_FILE}/bin
 ### Install Sonar Scanner
 RUN mkdir /root/tmp
 RUN curl -sSLo /root/tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}.tar.gz
-#COPY ${TARBALL}.tar.gz /root/tmp/${TARBALL}.tar.gz
+#COPY prebuild/${TARBALL}.tar.gz /root/tmp/${TARBALL}.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/${TARBALL}.sig /root/tmp/.

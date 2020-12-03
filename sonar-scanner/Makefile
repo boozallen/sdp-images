@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = sonar-scanner
-VERSION  = 4.4.0.2170
+VERSION  = 4.5.0.2216
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
@@ -28,8 +28,8 @@ push: ## builds and publishes container image
 
 build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))
-	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.1 /root/prebuild/pull-from-ubi.sh
-	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.1 /root/prebuild/build-dep.sh
+	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/pull-from-ubi.sh
+	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/build-dep.sh
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
