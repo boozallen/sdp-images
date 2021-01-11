@@ -1,13 +1,10 @@
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.2
+ARG BASE_TAG=8.3
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 # this container must run as privileged
 USER root
-
-ENV JENKINS_AGENT_VERSION dcar-1.6
-
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Jenkins Agent" \
       maintainer="terrana_steven@bah.com" \
@@ -27,6 +24,7 @@ RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-ope
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
+ENV JENKINS_AGENT_VERSION dcar-1.7
 ENV JENKINS_SWARM_VERSION 3.24
 ENV JNLP_SLAVE_VERSION 4.6
 ENV HOME /root
@@ -45,8 +43,6 @@ RUN cd /root/tmp/ && gpg --import BAH-public.key
 RUN cd /root/tmp/ && gpg --verify jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 RUN cd /root/tmp/  && echo "$(cat jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sha256) jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz" | sha256sum --check --status
 RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz && \
-    rm -f /root/tmp/dependencies/docker-ce/gnutls-3.6.8-11.el8_2.x86_64.rpm && \
-    rm -f /root/tmp/dependencies/docker-ce/crypto-policies-20200713-1.git51d1222.el8.noarch.rpm && \
     rpm -ivh --replacepkgs --replacefiles /root/tmp/dependencies/docker-ce/*.rpm
 
 RUN ls /root/tmp/dependencies/docker-compose/
