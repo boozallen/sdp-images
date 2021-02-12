@@ -29,8 +29,8 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed which" && \
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### define necessary variables like PATH to application
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.7
-ARG SONAR_SCANNER_VERSION=4.5.0.2216
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-1.8
+ARG SONAR_SCANNER_VERSION=4.6.0.2311
 ENV SONAR_SCANNER_FILE=sonar-scanner-${SONAR_SCANNER_VERSION}-linux
 ENV TARBALL=sonar-scanner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 ENV user=sonarscanner
