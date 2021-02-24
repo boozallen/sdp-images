@@ -2,7 +2,7 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-1.7
+JENKINS_AGENT_VERSION=dcar-1.8
 JENKINS_SWARM_VERSION=3.24
 JNLP_SLAVE_VERSION=4.6
 
@@ -15,3 +15,5 @@ yum --assumeyes install yum-utils
 dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 yumdownloader docker-ce-3:19.03.13-3.el8 --resolve --alldeps --destdir /root/prebuild/dependencies/docker-ce
 yumdownloader docker-ce-cli --resolve --destdir /root/prebuild/dependencies/docker-ce
+yumdownloader glibc -y --resolve --destdir /root/prebuild/dependencies/docker-ce
+yumdownloader glibc-common -y --resolve --destdir /root/prebuild/dependencies/docker-ce

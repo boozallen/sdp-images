@@ -16,7 +16,8 @@ su -c 'curl https://download.mono-project.com/repo/centos8-stable.repo | tee /et
 
 yum install -y yum-utils
 yumdownloader mono-complete -y --resolve --destdir /root/prebuild/dependencies/mono-complete --disableplugin=subscription-manager
-
+yumdownloader glibc -y --resolve --destdir /root/prebuild/dependencies/mono-complete --disableplugin=subscription-manager
+yumdownloader glibc-common -y --resolve --destdir /root/prebuild/dependencies/mono-complete --disableplugin=subscription-manager
 
 # fetch dependency-check upstream binary
 curl -sSLo /root/prebuild/dependencies/owasp/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip https://dl.bintray.com/jeremy-long/owasp/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip

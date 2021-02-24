@@ -16,7 +16,7 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="java-1.8.0-openjdk-devel ruby " && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk-devel ruby glibc glibc-common" && \
     yum -y update-minimal --setopt=tsflags=nodocs --security  && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
@@ -49,7 +49,8 @@ RUN cd /root/tmp && tar -xzf owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CH
 
 RUN cd /root/tmp && rpm -ivh --replacepkgs --replacefiles --force  /root/tmp/dependencies/mono-complete/*.rpm
 
-
+RUN UPDATE_PKGS="freetype libexif" && \
+    yum -y upgrade --setopt=tsflags=nodocs ${UPDATE_PKGS}
 
 RUN cd /root/tmp/dependencies/owasp && \
     unzip dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip    && \
