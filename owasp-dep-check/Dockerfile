@@ -49,9 +49,6 @@ RUN cd /root/tmp && tar -xzf owasp-dep-check-dependencies-$SDP_DCAR_OWASP_DEP_CH
 
 RUN cd /root/tmp && rpm -ivh --replacepkgs --replacefiles --force  /root/tmp/dependencies/mono-complete/*.rpm
 
-RUN UPDATE_PKGS="freetype libexif" && \
-    yum -y upgrade --setopt=tsflags=nodocs ${UPDATE_PKGS}
-
 RUN cd /root/tmp/dependencies/owasp && \
     unzip dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip    && \
     rm dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip       && \
