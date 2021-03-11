@@ -18,7 +18,7 @@ LABEL name="Solutions Delivery Platform: Jenkins Agent" \
 COPY LICENSE /licenses
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk glibc glibc-common git openssl scl-utils python3 python38 python38-devel iptables xz libcgroup diffutils" && yum clean all &&\
+RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk glibc glibc-common glibc-all-langpacks git openssl scl-utils python3 python38 python38-devel iptables xz libcgroup diffutils" && yum clean all &&\
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security && \
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
@@ -46,7 +46,7 @@ RUN cd /root/tmp && tar -xzf jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.t
     rpm -ivh --replacepkgs --replacefiles --force /root/tmp/dependencies/docker-ce/*.rpm
 
 RUN ls /root/tmp/dependencies/docker-compose/
-RUN python3 -m pip install && python3 -m pip install --upgrade pip
+RUN pip3 install --upgrade pip -f /root/tmp/dependencies/pip3/. --no-index
 RUN pip3 install supervisor -f /root/tmp/dependencies/supervisor/. --no-index
 RUN pip3 install docker-compose -f /root/tmp/dependencies/docker-compose/. --no-index
 

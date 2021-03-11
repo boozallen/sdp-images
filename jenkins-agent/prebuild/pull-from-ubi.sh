@@ -16,5 +16,14 @@ INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-openjdk
 
 python3 -m pip install
 python3 -m pip install --upgrade pip
+curl https://files.pythonhosted.org/packages/fe/ef/60d7ba03b5c442309ef42e7d69959f73aacccd0d86008362a681c4698e83/pip-21.0.1-py3-none-any.whl -o /root/prebuild/dependencies/pip3/pip-21.0.1-py3-none-any.whl
 pip3 download supervisor -d /root/prebuild/dependencies/supervisor/
 pip3 download docker-compose -d /root/prebuild/dependencies/docker-compose/
+rm -f /root/prebuild/dependencies/docker-ce/glibc-common-2.28-127.el8.x86_64.rpm && \
+rm -f /root/prebuild/dependencies/docker-ce/glibc-2.28-127.el8.x86_64.rpm && \
+rm -f /root/prebuild/dependencies/docker-ce/glibc-2.28-127.el8.i686.rpm && \
+rm -f /root/prebuild/dependencies/docker-ce/glibc-langpack-en-2.28-127.el8.x86_64.rpm && \
+rm -f /root/prebuild/dependencies/docker-ce/glibc-all-langpacks-2.28-127.el8.x86_64.rpm && \
+rm -f /root/prebuild/dependencies/docker-ce/kmod-25-16.el8.x86_64.rpm && \
+rm -f /root/prebuild/dependencies/docker-ce/kmod-libs-25-16.el8.x86_64.rpm
+rm -f /root/prebuild/dependencies/docker-ce/filesystem-3.8-3.el8.x86_64.rpm

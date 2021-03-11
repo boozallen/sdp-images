@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = owasp-dep-check
-VERSION  = 6.1.0
+VERSION  = 6.1.1
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
