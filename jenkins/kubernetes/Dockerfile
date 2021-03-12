@@ -40,7 +40,7 @@ ARG TINI_VERSION=v0.19.0
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.263.4}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.277.1}
 
 # Jenkins is run with user `jenkins`, uid = 1000
 # If you bind mount a volume from the host or a data container,
