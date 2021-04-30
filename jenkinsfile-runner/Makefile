@@ -9,7 +9,7 @@ REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile demo
-.ONESHELL: push
+.ONESHELL: push demo
 
 
 # Put it first so that "make" without argument is like "make help".
@@ -17,7 +17,7 @@ help: ## Show target options
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 build: ## build container image
-	docker build . -t $(TAG) --no-cache
+	docker build . -t $(TAG)
 
 push: ## builds and publishes container image
 	$(eval user := $(shell read -p "GitHub Username: " username; echo $$username))
@@ -37,6 +37,19 @@ build-dep: clean ## build container dependencies
 clean: 
 	rm -rf prebuild/dependencies
 	rm -rf resources/target
+
+demo: build
+	git clone https://github.com/jenkinsci/jenkinsfile-runner .jfr && \
+	docker run --rm \
+  -v $(shell pwd)/.jfr/demo/jenkins-templating-engine:/workspace \
+  -v $(shell pwd)/.jfr/:/tmp/libraries \
+  -v $(shell pwd)/.jfr/demo/jenkins-templating-engine/config:/usr/share/jenkins/ref/casc \
+   $(TAG) \
+   -jte -pc /workspace/pipeline_config.groovy && \
+	 cd .. && \
+	 rm -rf .jfr || rm -rf .jfr
+
+
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
