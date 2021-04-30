@@ -3,7 +3,6 @@ REPO     = sdp-images
 IMAGE    = jenkinsfile-runner
 VERSION  = dcar-1.8
 JENKINS_VERSION=2.290
-JTE_VERSION = 2.2.2
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
