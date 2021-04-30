@@ -2,6 +2,11 @@
 
 set -xe
 
+## runs inside registry.access.redhat.com/ubi8/ubi:8.3 
+echo "+------------+"
+echo "| Bulid Dep  |"
+echo "+------------+"
+
 SDP_BUILD_DEPENDENCY_VERSION=dcar-1.8
 
 cd /root/prebuild

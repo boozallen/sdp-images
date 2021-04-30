@@ -1,0 +1,3 @@
+jenkinsfile-runner/resources/target
+jenkinsfile-runner/prebuild/dependencies
+jenkinsfile-runner/prebuild/*.tar.gz
