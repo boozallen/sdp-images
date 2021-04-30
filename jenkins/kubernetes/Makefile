@@ -1,8 +1,8 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = jenkins
-VERSION  = dcar-1.8
-JENKINS_VERSION=2.277.1
+VERSION  = dcar-1.9
+JENKINS_VERSION=2.277.3
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
@@ -28,9 +28,9 @@ push: ## builds and publishes container image
 
 build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))
-	docker run -it -v $(dir)/prebuild:/var/jenkins_home/tmp jenkins/jenkins:${JENKINS_VERSION}-lts /var/jenkins_home/tmp/pull-plugins.sh
-	docker run -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/pull-from-centos.sh
-	docker run -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/build-dep.sh
+	docker run --user root -it -v $(dir)/prebuild:/var/jenkins_home/tmp jenkins/jenkins:${JENKINS_VERSION}-lts /var/jenkins_home/tmp/pull-plugins.sh
+	docker run --user root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/pull-from-centos.sh
+	docker run --user root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/build-dep.sh
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
