@@ -38,15 +38,6 @@ clean:
 	rm -rf prebuild/dependencies
 	rm -rf resources/target
 
-demo:
-	$(eval dir := $(shell dirname `pwd`))
-	$(eval path := /repo/jenkinsfile-runner/demo)
-	docker run --rm \
-		-v $(dir):/repo \
-		-v $(shell pwd)/demo/config:/usr/share/jenkins/ref/casc \
-		-e JENKINSFILE_PATH=$(path)/Jenkinsfile \
-		$(TAG) -jte -pc $(path)/pipeline_config.groovy
-
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
 
