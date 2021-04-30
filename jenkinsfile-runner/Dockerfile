@@ -15,7 +15,7 @@ COPY LICENSE /licenses
 
 USER root
 
-RUN INSTALL_PKGS="java-1.8.0-openjdk" && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk git" && \
     yum -y update-minimal --setopt=tsflags=nodocs \
         --security  && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
