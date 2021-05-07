@@ -1,5 +1,5 @@
 -------------
-Jenkins Agent
+Jenkinsfile-Runner
 -------------
 
 A container image packaging the Jenkins pipeline execution engine, found under the `Jenkins open source project <https://github.com/jenkinsci/jenkinsfile-runner>`_
