@@ -34,7 +34,6 @@ ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
 
-
 RUN curl -sSLo /tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkinsfile-runner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
 
 RUN cd /tmp && tar -xzf ${TARBALL}.tar.gz \
@@ -53,5 +52,5 @@ RUN cd /tmp && tar -xzf ${TARBALL}.tar.gz \
 VOLUME /build
 VOLUME /usr/share/jenkins/ref/casc
 VOLUME /usr/share/jenkins/ref/plugins
-
+USER $user
 ENTRYPOINT ["/app/bin/jenkinsfile-runner-launcher"]
