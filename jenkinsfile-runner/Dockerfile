@@ -15,7 +15,7 @@ COPY LICENSE /licenses
 
 USER root
 
-RUN INSTALL_PKGS="java-1.8.0-openjdk" && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk git" && \
     yum -y update-minimal --setopt=tsflags=nodocs \
         --security  && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
@@ -40,6 +40,7 @@ RUN cd /tmp && tar -xzf ${TARBALL}.tar.gz \
     && mkdir -p $JENKINS_HOME $TMP_DIR /usr/share/jenkins /build \
     && mv dependencies/ref /usr/share/jenkins/ref \
     && mv dependencies/app /app \
+    && rm -rf /tmp/* \
     && chown ${uid}:${gid} $JENKINS_HOME \
     && chown ${uid}:${gid} $TMP_DIR \
     && chown ${uid}:${gid} /app \
@@ -47,8 +48,6 @@ RUN cd /tmp && tar -xzf ${TARBALL}.tar.gz \
     && chown ${uid}:${gid} /build \
     && groupadd -g ${gid} ${group} \
     && useradd -d "$JENKINS_HOME" -d "$TMP_DIR" -d /app -d /usr/share/jenkins -u ${uid} -g ${gid} -m -s /bin/bash ${user}
-
-RUN rpm -ivh --replacepkgs --replacefiles /tmp/dependencies/rpms/*.rpm && rm -rf /tmp/*
 
 VOLUME /build
 VOLUME /usr/share/jenkins/ref/casc
