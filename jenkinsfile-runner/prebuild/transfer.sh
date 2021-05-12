@@ -8,7 +8,6 @@ echo "| Transfer   |"
 echo "+------------+"
 
 ## transfer artifacts to dependencies dir
-mkdir -p /root/prebuild/dependencies
+mkdir -p /root/prebuild/dependencies /root/prebuild/dependencies/ref
 cp -r /app /root/prebuild/dependencies/
-mkdir -p /root/prebuild/dependencies/ref
-mv /jenkinsfile-runner/target/plugins /root/prebuild/dependencies/ref/plugins
+cp -r /jenkinsfile-runner/target/plugins /root/prebuild/dependencies/ref/plugins

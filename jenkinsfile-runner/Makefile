@@ -28,12 +28,14 @@ push: ## builds and publishes container image
 
 build-dep: clean ## build container dependencies
 	$(eval dir := $(shell pwd))
-	docker build resources -f resources/Dockerfile -t jte-jfr
+	docker build resources -f resources/Dockerfile -t jte-jfr:latest
 	docker run -it --rm  -v $(dir)/prebuild:/root/prebuild --entrypoint /bin/bash jte-jfr /root/prebuild/transfer.sh
 	docker run -it --rm -u root -v $(dir)/prebuild:/root/prebuild jenkins/jenkins:${JENKINS_VERSION} /root/prebuild/pull-war.sh
-	docker run -it --rm -u root -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.3 /root/prebuild/build-dep.sh
+#	docker run -it --rm -u root -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8:8.3 /root/prebuild/rpm.sh
+	docker run -it --rm -u root -v $(dir)/prebuild:/root/prebuild:z fedora /root/prebuild/rpm.sh
+	docker run -it --rm -u root -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8:8.3 /root/prebuild/build-dep.sh
 
-clean: 
+clean:
 	rm -rf prebuild/dependencies
 	rm -rf resources/target
 
