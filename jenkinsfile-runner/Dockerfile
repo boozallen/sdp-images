@@ -15,7 +15,7 @@ COPY LICENSE /licenses
 
 USER root
 
-RUN INSTALL_PKGS="java-1.8.0-openjdk" && \
+RUN INSTALL_PKGS="java-1.8.0-openjdk git" && \
     yum -y update-minimal --setopt=tsflags=nodocs \
         --security  && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
@@ -33,7 +33,6 @@ ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
-
 
 RUN curl -sSLo /tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkinsfile-runner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
 
@@ -53,5 +52,5 @@ RUN cd /tmp && tar -xzf ${TARBALL}.tar.gz \
 VOLUME /build
 VOLUME /usr/share/jenkins/ref/casc
 VOLUME /usr/share/jenkins/ref/plugins
-
+USER $user
 ENTRYPOINT ["/app/bin/jenkinsfile-runner-launcher"]
