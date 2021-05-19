@@ -2,7 +2,7 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-1.8
+JENKINS_AGENT_VERSION=dcar-2.0
 
 cd /root/prebuild
 rm -f dependencies/docker-ce/coreutils-8.30-8.el8.x86_64.rpm

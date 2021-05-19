@@ -2,9 +2,9 @@
 
 set -xe
 
-JENKINS_AGENT_VERSION=dcar-1.8
-JENKINS_SWARM_VERSION=3.24
-JNLP_SLAVE_VERSION=4.6
+JENKINS_AGENT_VERSION=dcar-2.0
+JENKINS_SWARM_VERSION=3.25
+JNLP_SLAVE_VERSION=4.8
 
 rm -rf /root/prebuild/dependencies
 mkdir -p /root/prebuild/dependencies/swarm-client /root/prebuild/dependencies/agent /root/prebuild/dependencies/docker-ce /root/prebuild/dependencies/pip3 /root/prebuild/dependencies/docker-compose /root/prebuild/dependencies/supervisor /root/prebuild/dependencies/hostname

@@ -2,10 +2,10 @@
 
 set -xe
 
-SDP_BUILD_DEPENDENCY_VERSION=dcar-1.8
+SDP_BUILD_DEPENDENCY_VERSION=dcar-2.0
 OC_VERSION=v3.11.0
-HELM_VERSION=v3.5.2
-KUBECTL_VERSION=v1.20.0
+HELM_VERSION=v3.5.4
+KUBECTL_VERSION=v1.21.1
 
 rm -rf /root/prebuild/dependencies
 mkdir -p /root/prebuild/dependencies

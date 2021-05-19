@@ -24,9 +24,9 @@ RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-ope
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_AGENT_VERSION dcar-1.8
-ENV JENKINS_SWARM_VERSION 3.24
-ENV JNLP_SLAVE_VERSION 4.6
+ENV JENKINS_AGENT_VERSION dcar-2.0
+ENV JENKINS_SWARM_VERSION 3.25
+ENV JNLP_SLAVE_VERSION 4.8
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
