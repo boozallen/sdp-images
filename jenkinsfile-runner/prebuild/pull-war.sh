@@ -18,9 +18,9 @@ rm -rf \
 
 cp /root/prebuild/dependencies/tmp/jenkins/WEB-INF/lib/commons-beanutils-1.9.4.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/commons-beanutils-1.9.4.jar
 cp /root/prebuild/dependencies/tmp/jenkins/WEB-INF/lib/commons-fileupload-1.4.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/commons-fileupload-1.4.jar
-cp /root/prebuild/dependencies/tmp/jenkins/WEB-INF/lib/xstream-1.4.16.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/xstream-1.4.16.jar
 cp /root/prebuild/dependencies/tmp/jenkins/winstone.jar /root/prebuild/dependencies/app/jenkins/winstone.jar
 cp /root/prebuild/dependencies/app/repo/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
+cp /root/prebuild/dependencies/app/repo/com/thoughtworks/xstream/xstream/1.4.17/xstream-1.4.17.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/xstream-1.4.17.jar
 
 ## addressing CVE-2021-26291
 curl -sSLo /root/prebuild/dependencies/tmp/maven-model-3.5.4.jar https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.1/maven-model-3.8.1.jar
