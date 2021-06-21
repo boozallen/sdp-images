@@ -2,7 +2,7 @@
 
 set -xe
 
-## runs inside registry.access.redhat.com/ubi8/ubi:8.3 
+## runs inside registry.access.redhat.com/ubi8/ubi:8.4
 echo "+------------+"
 echo "| Bulid Dep  |"
 echo "+------------+"

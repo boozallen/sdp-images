@@ -21,7 +21,7 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk git" && \
     yum -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ENV SDP_BUILD_DEPENDENCY_VERSION dcar-1.8
-ARG TARBALL=jenkinsfile-runner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
+ARG TARBALL=jenkinsfile-runner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
 ENV JENKINS_UC https://updates.jenkins.io
 ENV CASC_JENKINS_CONFIG /usr/share/jenkins/ref/casc
 ENV JENKINS_PM_VERSION 2.5.0
@@ -34,9 +34,8 @@ ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
 
-RUN curl -sSLo /tmp/${TARBALL}.tar.gz https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/jenkinsfile-runner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
-
-RUN cd /tmp && tar -xzf ${TARBALL}.tar.gz \
+RUN curl -sSLo /tmp/${TARBALL} https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}
+RUN cd /tmp && tar -xzf ${TARBALL} \
     && mkdir -p $JENKINS_HOME $TMP_DIR /usr/share/jenkins /build \
     && mv dependencies/ref /usr/share/jenkins/ref \
     && mv dependencies/app /app \
