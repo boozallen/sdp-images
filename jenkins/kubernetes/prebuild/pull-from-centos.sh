@@ -4,7 +4,7 @@ set -xe
 
 
 TINI_VERSION=v0.19.0
-JENKINS_VERSION=2.277.3
+JENKINS_VERSION=2.289.2
 
 mkdir /root/prebuild/dependencies/tini/
 curl -kfsSL https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-amd64 -o /root/prebuild/dependencies/tini/tini-${TINI_VERSION}

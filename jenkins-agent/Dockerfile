@@ -1,6 +1,6 @@
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.3
+ARG BASE_TAG=8.4
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 # this container must run as privileged
@@ -24,16 +24,16 @@ RUN INSTALL_PKGS="tar hostname device-mapper-persistent-data lvm2 java-1.8.0-ope
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install your application here -- add all other necessary items to build your image
-ENV JENKINS_AGENT_VERSION dcar-2.0
-ENV JENKINS_SWARM_VERSION 3.25
-ENV JNLP_SLAVE_VERSION 4.8
+ENV JENKINS_AGENT_VERSION dcar-2.1
+ENV JENKINS_SWARM_VERSION 3.27
+ENV JNLP_SLAVE_VERSION 4.10
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java
 
 # install docker
 RUN mkdir /root/tmp
-RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/${JENKINS_AGENT_VERSION}/jenkins-agent-dependencies-${JENKINS_AGENT_VERSION}.tar.gz
-#COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
+#RUN curl -sSLo /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz https://github.com/boozallen/sdp-images/releases/download/${JENKINS_AGENT_VERSION}/jenkins-agent-dependencies-${JENKINS_AGENT_VERSION}.tar.gz
+COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz /root/tmp/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.tar.gz
 
 COPY prebuild/BAH-public.key /root/tmp/.
 COPY prebuild/jenkins-agent-dependencies-$JENKINS_AGENT_VERSION.sig /root/tmp/.

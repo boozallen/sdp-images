@@ -7,7 +7,7 @@ echo "+------------+"
 echo "| Bulid Dep  |"
 echo "+------------+"
 
-SDP_BUILD_DEPENDENCY_VERSION=dcar-1.8
+SDP_BUILD_DEPENDENCY_VERSION=dcar-2.1
 
 cd /root/prebuild
 tar czvf jenkinsfile-runner-dependencies-$SDP_BUILD_DEPENDENCY_VERSION.tar.gz dependencies

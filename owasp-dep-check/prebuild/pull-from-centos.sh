@@ -2,8 +2,8 @@
 
 set -xe
 
-OWASP_DEP_CHK_VERSION=6.1.6
-SDP_DCAR_OWASP_DEP_CHK_VERSION=dcar-2.0
+OWASP_DEP_CHK_VERSION=6.2.2
+SDP_DCAR_OWASP_DEP_CHK_VERSION=dcar-2.1
 
 rm -rf /root/prebuild/dependencies
 
@@ -23,7 +23,7 @@ yumdownloader glib2 -y --resolve --destdir /root/prebuild/dependencies/mono-comp
 # fetch dependency-check upstream binary
 #curl -sSLo /root/prebuild/dependencies/owasp/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip https://dl.bintray.com/jeremy-long/owasp/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip
 
-curl -sSLo /root/prebuild/dependencies/owasp/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip https://github.com/jeremylong/DependencyCheck/releases/download/v6.1.6/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip
+curl -sSLo /root/prebuild/dependencies/owasp/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip https://github.com/jeremylong/DependencyCheck/releases/download/v6.2.2/dependency-check-${OWASP_DEP_CHK_VERSION}-release.zip
 
 
 

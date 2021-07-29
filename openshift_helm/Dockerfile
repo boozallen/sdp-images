@@ -2,7 +2,7 @@
 # This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.3
+ARG BASE_TAG=8.4
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 MAINTAINER terrana_steven@bah.com
 
@@ -15,7 +15,7 @@ LABEL name="Solutions Delivery Platform: Helm" \
       summary="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform" \
       description="A container used by the openshift and kubernetes libraries within the Solutions Delivery Platform"
 
-ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-2.0
+ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-2.1
 ARG user=sdp
 ARG group=sdp
 ARG uid=1000
