@@ -1,1 +1,2 @@
 templating-engine:2.3
+credentials:2.5

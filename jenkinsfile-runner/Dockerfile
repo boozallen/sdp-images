@@ -34,9 +34,9 @@ ARG group=jenkins
 ARG uid=1000
 ARG gid=1000
 
-#RUN curl -sSLo /tmp/${TARBALL} https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}
+RUN curl -sSLo /tmp/${TARBALL} https://github.com/boozallen/sdp-images/releases/download/${SDP_BUILD_DEPENDENCY_VERSION}/${TARBALL}
 COPY prebuild/${TARBALL} /tmp/${TARBALL}
-RUN cd /tmp && tar -xzf ${TARBALL} \
+#RUN cd /tmp && tar -xzf ${TARBALL} \
     && mkdir -p $JENKINS_HOME $TMP_DIR /usr/share/jenkins /build \
     && mv dependencies/ref /usr/share/jenkins/ref \
     && mv dependencies/app /app \
