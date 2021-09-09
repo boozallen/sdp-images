@@ -15,7 +15,7 @@ rm -rf \
   /root/prebuild/dependencies/app/repo/commons-jelly/commons-jelly-tags-fmt \
   /root/prebuild/dependencies/app/repo/org/apache/maven/maven-model/3.5.4/maven-model-3.5.4.jar \
   /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/guava-11.0.1.jar \
-  /root/prebuild/dependencies/app/repo/org/apache/commons\commons-compress\1.19\commons-compress-1.19.jar
+  /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.19/commons-compress-1.19.jar
 
 cp /root/prebuild/dependencies/tmp/jenkins/winstone.jar /root/prebuild/dependencies/app/jenkins/winstone.jar
 cp /root/prebuild/dependencies/app/repo/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
