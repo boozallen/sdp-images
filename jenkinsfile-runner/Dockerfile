@@ -24,7 +24,7 @@ ENV SDP_BUILD_DEPENDENCY_VERSION dcar-2.1
 ARG TARBALL=jenkinsfile-runner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}.tar.gz
 ENV JENKINS_UC https://updates.jenkins.io
 ENV CASC_JENKINS_CONFIG /usr/share/jenkins/ref/casc
-ENV JENKINS_PM_VERSION 2.10.0
+ENV JENKINS_PM_VERSION 2.11.0
 ENV JENKINS_PM_URL https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/${JENKINS_PM_VERSION}/jenkins-plugin-manager-${JENKINS_PM_VERSION}.jar
 ENV JENKINSFILE_PATH ""
 ARG JENKINS_HOME=/var/jenkins_home
