@@ -14,14 +14,32 @@ rm -rf \
   /root/prebuild/dependencies/app/jenkins/{scripts,jsbundles,css,images,help,WEB-INF/detached-plugins,winstone.jar,WEB-INF/jenkins-cli.jar} \
   /root/prebuild/dependencies/app/repo/commons-jelly/commons-jelly-tags-fmt \
   /root/prebuild/dependencies/app/repo/org/apache/maven/maven-model/3.5.4/maven-model-3.5.4.jar \
-  /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/guava-11.0.1.jar \
-  /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.19/commons-compress-1.19.jar
+  /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/guava-11.0.1.jar 
 
 cp /root/prebuild/dependencies/tmp/jenkins/winstone.jar /root/prebuild/dependencies/app/jenkins/winstone.jar
 cp /root/prebuild/dependencies/app/repo/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
 cp /root/prebuild/dependencies/app/repo/com/thoughtworks/xstream/xstream/1.4.18/xstream-1.4.18.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
 cp /root/prebuild/dependencies/app/repo/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
 cp /root/prebuild/dependencies/app/repo/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
+
+## updating eclipse
+curl -sSLo /root/prebuild/dependencies/tmp/jetty-webapp-9.4.43.v20210629.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629/jetty-webapp-9.4.43.v20210629.jar
+curl -sSLo /root/prebuild/dependencies/tmp/jetty-server-9.4.43.v20210629.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.4.43.v20210629/jetty-server-9.4.43.v20210629.jar 
+mkdir /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.43.v20210629 \
+      /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629 
+cp /root/prebuild/dependencies/tmp/jetty-webapp-9.4.43.v20210629.jar /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629 
+cp /root/prebuild/dependencies/tmp/jetty-server-9.4.43.v20210629.jar /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.43.v20210629 
+rm -rf /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.39.v20210325 
+rm -rf /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.39.v20210325
+
+## updating commons-compress manually
+curl -sSLo /root/prebuild/dependencies/tmp/commons-compress-1.21.jar https://repo1.maven.org/maven2/org/apache/commons/commons-compress/1.21/commons-compress-1.21.jar
+mkdir /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.21
+cp /root/prebuild/dependencies/tmp/commons-compress-1.21.jar /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.21
+cp /root/prebuild/dependencies/tmp/commons-compress-1.21.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
+rm -rf /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/commons-compress-1.19.jar   
+rm -rf /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.19
+
 
 ## addressing CVE-2021-26291
 curl -sSLo /root/prebuild/dependencies/tmp/maven-model-3.5.4.jar https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.1/maven-model-3.8.1.jar
