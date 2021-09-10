@@ -7,13 +7,13 @@
   <parent>
     <groupId>io.jenkins.jenkinsfile-runner</groupId>
     <artifactId>packaging-parent-pom</artifactId>
-    <version>1.0-beta-30</version>
+    <version>1.0-beta-27</version>
   </parent>
 
   <artifactId>org.boozallen.jte.runner</artifactId>
   <name>JTE Jenkinsfile-Runner</name>
   <description>Jenkinsfile Runner for running JTE pipelines</description>
-  <version>1.0-beta-30</version>
+  <version>1.0-beta-27</version>
 
   <properties>
     <jfr.name>org.boozallen.jte.runner</jfr.name>
@@ -125,11 +125,6 @@
     <groupId>com.google.guava</groupId>
     <artifactId>guava</artifactId>
     <version>30.1.1-jre</version>
-    </dependency>
-    <dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-compress</artifactId>
-    <version>1.21</version>
     </dependency>
   </dependencies>
 
