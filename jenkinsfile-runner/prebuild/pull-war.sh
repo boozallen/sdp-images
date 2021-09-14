@@ -10,7 +10,7 @@ mkdir -p /root/prebuild/dependencies/tmp /root/prebuild/dependencies/tmp/jenkins
 cp /usr/share/jenkins/jenkins.war /root/prebuild/dependencies/tmp/jenkins.war
 unzip -q /root/prebuild/dependencies/tmp/jenkins.war -d /root/prebuild/dependencies/tmp/jenkins/
 rm -rf \
-  /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/{commons-beanutils-1.9.3.jar,commons-fileupload-1.3.1-jenkins-2.jar,handlebars-1.1.1-core-assets.jar,commons-jelly-tags-fmt-1.0.jar,xstream-1.4.15.jar,xstream-1.4.17.jar,jna-4.5.2.jar} \
+  /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/{commons-beanutils-1.9.3.jar,commons-fileupload-1.3.1-jenkins-2.jar,handlebars-1.1.1-core-assets.jar,commons-jelly-tags-fmt-1.0.jar,xstream-1.4.15.jar,xstream-1.4.16.jar,xstream-1.4.17.jar,jna-4.5.2.jar} \
   /root/prebuild/dependencies/app/jenkins/{scripts,jsbundles,css,images,help,WEB-INF/detached-plugins,winstone.jar,WEB-INF/jenkins-cli.jar} \
   /root/prebuild/dependencies/app/repo/commons-jelly/commons-jelly-tags-fmt \
   /root/prebuild/dependencies/app/repo/org/apache/maven/maven-model/3.5.4/maven-model-3.5.4.jar \
@@ -24,22 +24,31 @@ cp /root/prebuild/dependencies/app/repo/commons-beanutils/commons-beanutils/1.9.
 
 ## updating eclipse
 curl -sSLo /root/prebuild/dependencies/tmp/jetty-webapp-9.4.43.v20210629.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629/jetty-webapp-9.4.43.v20210629.jar
-curl -sSLo /root/prebuild/dependencies/tmp/jetty-server-9.4.43.v20210629.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.4.43.v20210629/jetty-server-9.4.43.v20210629.jar 
+curl -sSLo /root/prebuild/dependencies/tmp/jetty-server-9.4.43.v20210629.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.4.43.v20210629/jetty-server-9.4.43.v20210629.jar
+curl -sSLo /root/prebuild/dependencies/tmp/jetty-io-9.4.43.v20210629.jar https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/9.4.43.v20210629/jetty-io-9.4.43.v20210629.jar
+ 
 mkdir /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.43.v20210629 \
-      /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629 
+      /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629 \
+      /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-io/9.4.43.v20210629
+
 cp /root/prebuild/dependencies/tmp/jetty-webapp-9.4.43.v20210629.jar /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.43.v20210629 
-cp /root/prebuild/dependencies/tmp/jetty-server-9.4.43.v20210629.jar /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.43.v20210629 
+cp /root/prebuild/dependencies/tmp/jetty-server-9.4.43.v20210629.jar /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.43.v20210629
+
+cp /root/prebuild/dependencies/tmp/jetty-io-9.4.43.v20210629.jar /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-io/9.4.43.v20210629
+ 
 rm -rf /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-server/9.4.39.v20210325 
 rm -rf /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-webapp/9.4.39.v20210325
+rm -rf /root/prebuild/dependencies/app/repo/org/eclipse/jetty/jetty-io/9.4.39.v20210325
 
 ## updating commons-compress manually
 curl -sSLo /root/prebuild/dependencies/tmp/commons-compress-1.21.jar https://repo1.maven.org/maven2/org/apache/commons/commons-compress/1.21/commons-compress-1.21.jar
 mkdir /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.21
 cp /root/prebuild/dependencies/tmp/commons-compress-1.21.jar /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.21
 cp /root/prebuild/dependencies/tmp/commons-compress-1.21.jar /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/
-rm -rf /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/commons-compress-1.19.jar   
+rm -rf /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/commons-compress-1.19.jar
+rm -rf /root/prebuild/dependencies/app/jenkins/WEB-INF/lib/commons-compress-1.20.jar   
 rm -rf /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.19
-
+rm -rf /root/prebuild/dependencies/app/repo/org/apache/commons/commons-compress/1.20
 
 ## addressing CVE-2021-26291
 curl -sSLo /root/prebuild/dependencies/tmp/maven-model-3.5.4.jar https://repo1.maven.org/maven2/org/apache/maven/maven-model/3.8.1/maven-model-3.8.1.jar
