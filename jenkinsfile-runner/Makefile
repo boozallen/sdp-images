@@ -2,7 +2,7 @@ OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = jenkinsfile-runner
 VERSION  = dcar-2.1
-JENKINS_VERSION=2.311
+JENKINS_VERSION=2.289.1
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)

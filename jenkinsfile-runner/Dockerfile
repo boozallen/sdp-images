@@ -6,8 +6,8 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: Jenkins Master" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="1.0-beta-30" \
-      release="1.0-beta-30" \
+      version="1.0-beta-29" \
+      release="1.0-beta-29" \
       summary="Jenkins pipeline execution engine packaged as a container" \
       description="The Jenkins Master container image for the Solutions Delivery Platform"
 

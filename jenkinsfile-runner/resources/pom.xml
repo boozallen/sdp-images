@@ -7,13 +7,13 @@
   <parent>
     <groupId>io.jenkins.jenkinsfile-runner</groupId>
     <artifactId>packaging-parent-pom</artifactId>
-    <version>1.0-beta-27</version>
+    <version>1.0-beta-29</version>
   </parent>
 
   <artifactId>org.boozallen.jte.runner</artifactId>
   <name>JTE Jenkinsfile-Runner</name>
   <description>Jenkinsfile Runner for running JTE pipelines</description>
-  <version>1.0-beta-27</version>
+  <version>1.0-beta-29</version>
 
   <properties>
     <jfr.name>org.boozallen.jte.runner</jfr.name>
@@ -94,7 +94,7 @@
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4-runtime</artifactId>
-      <version>4.9.1</version>
+      <version>4.9.2</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
