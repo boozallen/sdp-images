@@ -1,10 +1,10 @@
 # Container Hardening
 
-In general, container hardening is the proceess of utilizing container 
+In general, container hardening is the process of utilizing container
 scanning tools to detect possible CVEs (Common Vulnerabilities & Exposures) 
 and remediating them to minimize the attack surface of a container. 
 Each individual, organization, or other entity may form their own requirements 
-for this process and its outputs based on their needs and risk acceptance. 
+for this process and its outputs based on their needs and risk tolerance.
 Below is an example:
 
 > We are building a web server container using [Apache HTTP](https://httpd.apache.org/) version 2.4.48 as the server. 
@@ -13,15 +13,15 @@ Below is an example:
 > After reviewing the CVE, we decided to upgrade the Apache HTTP server to the newer version 2.4.51 
 > in order to prevent the vulnerability from being exploited and remove the threat from the container.
 
-## SDP and Container Hardening
+## Solutions Delivery Platform (SDP) and Container Hardening
 
 The hardening process undertaken for the containers of this repository is 
 aligned with the [Iron Bank hardening process](https://repo1.dso.mil/dsop/dccscr/-/tree/master). 
 This allows for containers offered by this repository to receive comparatively 
 the same degree of hardening provided to containers being used across the 
-United States Department of Defence (US DoD). 
+United States Department of Defense (US DoD).
 Currently containers that have been hardened can be located in the 
-RepoOne [SDP repository](https://repo1.dso.mil/dsop/solutions-delivery-platform) and 
+Repo One [SDP repository](https://repo1.dso.mil/dsop/solutions-delivery-platform) and
 [Jenkinsfile-Runner repository](https://repo1.dso.mil/dsop/opensource/jenkins/jenkinsfile-runner). 
 Additionally, the full breakdown of our hardening process is as follows, 
 with the assumption that a given application has been containerized:
@@ -37,7 +37,7 @@ with the assumption that a given application has been containerized:
     > followed by a subcommand from the Makefile. 
     > For example, to run the tarball creation automation, type **make build-dep**. 
     > At this time, creation of the tarball requires both the BAH-Public & BAH-Private keys. 
-    > See a repository administator should you need to perform this action.
+    > See a repository administrator should you need to perform this action.
 2. Build and test the container for expected performance
     1. Upgrading or modifying components of a container may cause intended functionality 
     of a given container to break, detecting this early helps reduce user impact
@@ -75,20 +75,20 @@ with the assumption that a given application has been containerized:
     archive or displayed in the **check-cves** job of the pipeline
 7. Remediate all possible findings, repeating steps 1 through 6 as necessary
     1. Each CVE can be searched for on the internet for their description and 
-    possible patchs or mitigations for their resolution, most notably 
+    possible patches or mitigation steps for their resolution, most notably
     via the [National Vulnerability Database](https://nvd.nist.gov/vuln/search)
     2. Each compliance finding will have their description and possible patch 
-    defined in the excel spreadsheet mentioned in step 6
+    defined in the Excel spreadsheet mentioned in step 6
     3. The most common remediation techniques include, but are not limited to, 
     updating packages to newer versions, removing packages, and applying 
     system adminstration (ex. chmod a file to be used only by authorized users) to the container.
 8. Submit justifications to the Iron Bank container hardening team for any non remediable CVE or compliance findings
-    1. In the excel spreadsheet described in step 6, provide a written justification 
+    1. In the Excel spreadsheet described in step 6, provide a written justification
     in the `justification` column for the correlating CVE row
-    2. The Iron Bank provides guidance for creating justifications under 
+    2. The Iron Bank provides guidance for creating justifications under
     the **Contributors** section [here](https://repo1.dso.mil/dsop/dccscr/-/tree/master)
-    3. Select the **Issues** tab in the Iron Bank container repository, and append the justifications to the appropriate issue.
+    3. Select the **Issues** tab in the Iron Bank container repository, and append the justifications to the appropriate issue
     4. Open a merge request via the **Merge requests** tab in the Iron Bank 
     container repository to merge your feature branch to the development branch, 
-    and link the merge request to the corresponding issue.
+    and link the merge request to the corresponding issue
     5. Iron Bank will provide a determination if further action is required
