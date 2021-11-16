@@ -28,26 +28,26 @@ with the assumption that a given application has been containerized:
 
 1. Identify all dependencies required for the application and gather them in a tarball
     1. This includes any .jar, .rpm, .whl, or other packages/files needed for the application in the container to function
-    2. Packaging dependencies in this manner allow for this step to be automated, 
-    and will allow containers to be built in environments without network connection
+    2. Packaging dependencies in this manner allows for this step to be automated,
+    and will allow containers to be built in environments without external network connections
     3. An example of a container following this pattern is Jenkins, examine the [prebuild](/jenkins/kubernetes/prebuild/) 
     folder for setting up scripts automating this process, 
     and the [Makefile](/jenkins/kubernetes/Makefile/) for stringing scripts together
-    > To use Make CLI functions in a terminal, type **make** 
-    > followed by a subcommand from the Makefile. 
-    > For example, to run the tarball creation automation, type **make build-dep**. 
-    > At this time, creation of the tarball requires both the BAH-Public & BAH-Private keys. 
+    > To use Make CLI functions in a terminal, type `make`
+    > followed by a subcommand from the Makefile.
+    > For example, to run the tarball creation automation, type `make build-dep`.
+    > At this time, creation of the tarball requires both the BAH-Public & BAH-Private keys.
     > See a repository administrator should you need to perform this action.
 2. Build and test the container for expected performance
     1. Upgrading or modifying components of a container may cause intended functionality 
     of a given container to break, detecting this early helps reduce user impact
     2. To build a container, follow your installed container tool's manual
-    > Using Docker for example, use **docker build --no-cache -t example-container:example-tag .**
+    > Using Docker for example, use `docker build --no-cache -t example-container:example-tag .`
     3. Testing the functionality of a container for expected behavior 
     is unique to each container and the applications they house. 
     Read any provided documentation for each application and how it should be deployed
     4. Each container should provide instruction for how to use or deploy it
-3. Create a release on Github hosting the dependency tarball
+3. Create a release on GitHub hosting the dependency tarball
     1. Hosting the dependency tarball allows users to modify, build, and 
     test containers in their own environments, including Iron Bank
     2. For creating a release:
@@ -62,7 +62,7 @@ with the assumption that a given application has been containerized:
     Dockerfile, README, configuration or other supporting files
     2. You will need to [register](https://login.dso.mil/auth/realms/baby-yoda/protocol/openid-connect/registrations?client_id=account&response_type=code)
     for an account if you don't have a Platform One account, 
-    otherwise login to [repo one](https://repo1.dso.mil/)
+    otherwise login to [Repo One](https://repo1.dso.mil/)
     3. Request access to the respective repository by using the **Request Access** link
     to the right of project ID underneath the name of the repository 
     at the top of the webpage if you don't have access to make changes
@@ -71,7 +71,7 @@ with the assumption that a given application has been containerized:
     given branch of the container repository, but can be triggered manually as well 
     in the **CI/CD -> Pipelines** section of the repository
 6. Review the scan results for offending CVE or compliance findings
-    1. Can be located as an excel spreadsheet in the **csv-output** job artifact 
+    1. Can be located as an Excel spreadsheet in the **csv-output** job artifact
     archive or displayed in the **check-cves** job of the pipeline
 7. Remediate all possible findings, repeating steps 1 through 6 as necessary
     1. Each CVE can be searched for on the internet for their description and 
