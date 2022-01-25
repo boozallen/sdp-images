@@ -120,12 +120,12 @@ Required Folder Structure:
     └── .gitlab/                       (created by default)
 
 - Dockerfile: The instruction [file](https://repo1.dso.mil/dsop/dccscr/-/blob/master/Hardening/Dockerfile_Requirements.md) 
-> used to build the container.
+used to build the container.
 - hardening_manifest.yaml: [File](https://repo1.dso.mil/dsop/dccscr/-/tree/master/hardening%20manifest) 
-> containing meta data for the container.
+containing meta data for the container.
 - LICENSE: The legal license file associated with the container.
 - README.md: An introductory writeup of the container. 
-> [More info found here](https://repo1.dso.mil/dsop/dccscr/-/blob/master/Hardening/structure_requirements.md)
+[More info found here](https://repo1.dso.mil/dsop/dccscr/-/blob/master/Hardening/structure_requirements.md)
 - renovate.json: Optional file for setting up further automation of the repo.
 - config/: Folder for keeping configuration files in one place.
 - documentation/: Folder keeping additional documenation in one place.
