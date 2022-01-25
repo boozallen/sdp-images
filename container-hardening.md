@@ -94,3 +94,40 @@ with the assumption that a given application has been containerized:
     container repository to merge your feature branch to the development branch, 
     and link the merge request to the corresponding issue
     5. Iron Bank will provide a determination if further action is required
+
+## Iron Bank Notes
+
+This section will provide additional details regarding Repo One, Iron Bank, 
+and other services related to containers at Platform One.
+
+[Repository Structure](https://repo1.dso.mil/dsop/dccscr/-/blob/master/Hardening/structure_requirements.md)
+
+The folder structure for a given container repository is kept up 
+to date at the above link, but follows the general pattern as follows below.
+
+Required Folder Structure:
+
+    container-project (feature-branch)
+    │                             
+    ├── Dockerfile                     (required)
+    ├── hardening_manifest.yaml        (required)
+    ├── LICENSE                        (required)
+    ├── README.md                      (required)
+    ├── renovate.json                  (file to be created if needed)
+    ├── config/                        (directory to be created if needed)
+    ├── documentation/                 (directory to be created if needed)
+    ├── scripts/                       (directory to be created if needed)
+    └── .gitlab/                       (created by default)
+
+- Dockerfile: The instruction [file](https://repo1.dso.mil/dsop/dccscr/-/blob/master/Hardening/Dockerfile_Requirements.md) 
+> used to build the container.
+- hardening_manifest.yaml: [File](https://repo1.dso.mil/dsop/dccscr/-/tree/master/hardening%20manifest) 
+> containing meta data for the container.
+- LICENSE: The legal license file associated with the container.
+- README.md: An introductory writeup of the container. 
+> [More info found here](https://repo1.dso.mil/dsop/dccscr/-/blob/master/Hardening/structure_requirements.md)
+- renovate.json: Optional file for setting up further automation of the repo.
+- config/: Folder for keeping configuration files in one place.
+- documentation/: Folder keeping additional documenation in one place.
+- scripts/: Folder for keeping any scripts in one place.
+- .gitlab/: Default folder containing templates for gitlab issues.
