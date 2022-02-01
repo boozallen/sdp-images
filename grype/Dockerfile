@@ -27,13 +27,13 @@ RUN INSTALL_PKGS="coreutils python3-pip jq" && \
   yum clean all &&\
   yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
   --security && \
-  yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
+  yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}
 
 ### Install yq
 RUN python3 -m pip install --user yq
 
 ENV PROGRAM_NAME grype
-ENV PROGRAM_VERSION 0.1.0
+ENV PROGRAM_VERSION v0.32.0
 ENV HOME /root
 ENV PROGRAM_DESTINATION_DIR /usr/local/bin
 
@@ -42,7 +42,7 @@ ARG user=${PROGRAM_NAME}
 WORKDIR /scanner
 
 # Install Grype
-RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ${PROGRAM_DESTINATION_DIR}
+RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b ${PROGRAM_DESTINATION_DIR} ${PROGRAM_VERSION}
 
 # Add user, create required directories and cleanup
 RUN useradd -ms /bin/bash ${user}                                                                              && \
