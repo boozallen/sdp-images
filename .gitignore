@@ -1,3 +1,4 @@
+.DS_Store
 # JFR
 jenkinsfile-runner/resources/target
 jenkinsfile-runner/prebuild/dependencies
