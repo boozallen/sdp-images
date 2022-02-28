@@ -8,10 +8,10 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Syft" \
-      maintainer="terrana_steven@bah.com" \
+      maintainer="uip@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="0.1.0" \
-      release="0.1.0" \
+      version="0.36.0" \
+      release="0.36.0" \
       summary="Anchore Syft container" \
       description="The Anchore Syft container image for the Solutions Delivery Platform"
 
