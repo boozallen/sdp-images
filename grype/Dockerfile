@@ -7,12 +7,11 @@ ARG BASE_TAG=8.4
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
-### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Grype" \
-      maintainer="terrana_steven@bah.com" \
+      maintainer="uip@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="0.1.0" \
-      release="0.1.0" \
+      version="0.32.0" \
+      release="0.32.0" \
       summary="Anchore Grype container" \
       description="The Anchore Grype container image for the Solutions Delivery Platform"
 
