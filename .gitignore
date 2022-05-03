@@ -4,3 +4,7 @@ jenkinsfile-runner/resources/target
 jenkinsfile-runner/prebuild/dependencies
 jenkinsfile-runner/prebuild/*.tar.gz
 jenkinsfile-runner/.jfr
+
+# Sonar-Scanner
+sonar-scanner/prebuild/dependencies
+sonar-scanner/prebuild/*.tar.gz
