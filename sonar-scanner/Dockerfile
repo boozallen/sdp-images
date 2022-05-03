@@ -22,7 +22,7 @@ COPY LICENSE /licenses
 ### Using yum as root user
 USER root
 ### Install packages
-RUN INSTALL_PKGS="java-11-openjdk curl grep sed which" && \
+RUN INSTALL_PKGS="java-11-openjdk nodejs curl grep sed which" && \
     yum clean all &&\
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security && \
