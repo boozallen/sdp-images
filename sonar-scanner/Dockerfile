@@ -11,8 +11,8 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: Sonar Scanner" \
       maintainer="terrana_steven@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="4.5.0.2216" \
-      release="4.5.0.2216" \
+      version="4.7.0.2747" \
+      release="4.7.0.2747" \
       summary="A sonar-scanner container used by the SonarQube library of the Solutions Delivery Platform" \
       description="A sonar-scanner container used by the SonarQube library of the Solutions Delivery Platform"
 
@@ -22,7 +22,7 @@ COPY LICENSE /licenses
 ### Using yum as root user
 USER root
 ### Install packages
-RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed which" && \
+RUN INSTALL_PKGS="java-11-openjdk curl grep sed which" && \
     yum clean all &&\
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security && \
@@ -30,7 +30,7 @@ RUN INSTALL_PKGS="java-1.8.0-openjdk curl grep sed which" && \
 
 ### define necessary variables like PATH to application
 ARG SDP_BUILD_DEPENDENCY_VERSION=dcar-2.0
-ARG SONAR_SCANNER_VERSION=4.6.2.2472
+ARG SONAR_SCANNER_VERSION=4.7.0.2747
 ENV SONAR_SCANNER_FILE=sonar-scanner-${SONAR_SCANNER_VERSION}-linux
 ENV TARBALL=sonar-scanner-dependencies-${SDP_BUILD_DEPENDENCY_VERSION}
 ENV user=sonarscanner
