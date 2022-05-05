@@ -6,6 +6,7 @@ ARG BASE_IMAGE=ubi8/ubi
 ARG BASE_TAG=8.5
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 ARG SONAR_SCANNER_VERSION=4.7.0.2747
+ARG NODEJS_VERSION=16
 
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
@@ -25,7 +26,8 @@ USER root
 
 ### Install packages
 RUN INSTALL_PKGS="java-11-openjdk nodejs curl grep sed which" && \
-    yum clean all &&\
+    yum -y module enable nodejs:$NODEJS_VERSION && \
+    yum clean all && \
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
         --security && \
     yum --disableplugin=subscription-manager -y install --setopt=tsflags=nodocs ${INSTALL_PKGS}
