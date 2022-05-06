@@ -3,7 +3,7 @@ REPO     = sdp-images
 IMAGE    = sonar-scanner
 VERSION  = 4.7.0.2747
 
-REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
+REGISTRY = ghcr.io/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile
@@ -26,10 +26,16 @@ push: ## builds and publishes container image
 	make build
 	docker push $(TAG)
 
-build-dep: ## build container dependencies
+build-dep: ## build container dependencies and bundle them into a tarball
 	$(eval dir := $(shell pwd))
 	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.5 /root/prebuild/pull-from-ubi.sh
 	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.5 /root/prebuild/build-dep.sh
+
+# Separate dependency make step to avoid bundling a tarball - not using the tarball requires 
+# making a change to the Dockerfile to locate the dependencies
+build-local: ## build container dependencies and place at ./prebuild/dependencies/
+	$(eval dir := $(shell pwd))
+	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.5 /root/prebuild/pull-from-ubi.sh
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
