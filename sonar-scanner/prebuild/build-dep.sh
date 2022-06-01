@@ -2,7 +2,7 @@
 
 set -xe
 
-SDP_BUILD_DEPENDENCY_VERSION=dcar-2.0
+SDP_BUILD_DEPENDENCY_VERSION=dcar-2.1
 
 cd /root/prebuild
 tar czvf sonar-scanner-dependencies-$SDP_BUILD_DEPENDENCY_VERSION.tar.gz dependencies
