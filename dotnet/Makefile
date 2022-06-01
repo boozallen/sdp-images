@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = dotnet-sdk
-VERSION  = 5.0.0
+VERSION  = 5.0.214
 ###Previous version 5.2.2
 
 #REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
