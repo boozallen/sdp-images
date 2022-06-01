@@ -4,8 +4,7 @@ IMAGE    = dotnet-sdk
 VERSION  = 5.0.214
 ###Previous version 5.2.2
 
-#REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
-REGISTRY = registry.uip.sh/toolkit
+REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile 
