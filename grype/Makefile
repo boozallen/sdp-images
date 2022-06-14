@@ -3,7 +3,7 @@ REPO     = sdp-images
 IMAGE    = grype
 VERSION  = 0.38.0
 
-REGISTRY = docker.pkg.github.com/$(REPO)
+REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile
