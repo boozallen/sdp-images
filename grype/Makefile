@@ -1,9 +1,9 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = grype
-VERSION  = 0.32.0
+VERSION  = 0.38.0
 
-REGISTRY = docker.pkg.github.com/$(REPO)
+REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile
@@ -24,7 +24,9 @@ push: ## builds and publishes container image
 	@echo
 	@docker login $(REGISTRY) -u $(user) -p $(pass);
 	make build
+	docker tag $(TAG) $(REGISTRY)/$(IMAGE):latest
 	docker push $(TAG)
+	docker push $(REGISTRY)/$(IMAGE):latest
 
 build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))

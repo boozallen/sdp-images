@@ -10,8 +10,8 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: Grype" \
       maintainer="uip@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="0.32.0" \
-      release="0.32.0" \
+      version="0.38.0" \
+      release="0.38.0" \
       summary="Anchore Grype container" \
       description="The Anchore Grype container image for the Solutions Delivery Platform"
 
@@ -32,7 +32,7 @@ RUN INSTALL_PKGS="coreutils python3-pip jq" && \
 RUN python3 -m pip install --user yq
 
 ENV PROGRAM_NAME grype
-ENV PROGRAM_VERSION v0.32.0
+ENV PROGRAM_VERSION v0.38.0
 ENV HOME /root
 ENV PROGRAM_DESTINATION_DIR /usr/local/bin
 
