@@ -1,9 +1,9 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = syft
-VERSION  = 0.36.0
+VERSION  = 0.47.0
 
-REGISTRY = docker.pkg.github.com/$(REPO)
+REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile
@@ -29,8 +29,8 @@ push: ## builds and publishes container image
 
 build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))
-	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.4 /root/prebuild/pull-from-ubi.sh
-	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.4 /root/prebuild/build-dep.sh
+	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.6-754 /root/prebuild/pull-from-ubi.sh
+	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.6-754 /root/prebuild/build-dep.sh
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
