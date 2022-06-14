@@ -3,15 +3,15 @@
 
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.4
+ARG BASE_TAG=8.6-754
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
 LABEL name="Solutions Delivery Platform: Syft" \
       maintainer="uip@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="0.36.0" \
-      release="0.36.0" \
+      version="0.47.0" \
+      release="0.47.0" \
       summary="Anchore Syft container" \
       description="The Anchore Syft container image for the Solutions Delivery Platform"
 
@@ -30,7 +30,7 @@ RUN INSTALL_PKGS="coreutils python3-pip jq" && \
 ENV PROGRAM_NAME syft
 ENV HOME /root
 ENV PROGRAM_DESTINATION_DIR /usr/local/bin
-ENV PROGRAM_VERSION v0.36.0
+ENV PROGRAM_VERSION v0.47.0
 
 ARG user=${PROGRAM_NAME}
 
