@@ -24,7 +24,9 @@ push: ## builds and publishes container image
 	@echo
 	@docker login $(REGISTRY) -u $(user) -p $(pass);
 	make build
+	docker tag $(TAG) $(REGISTRY)/$(IMAGE):latest
 	docker push $(TAG)
+	docker push $(REGISTRY)/$(IMAGE):latest
 
 build-dep: ## build container dependencies
 	$(eval dir := $(shell pwd))
