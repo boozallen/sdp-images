@@ -24,7 +24,7 @@ USER root
 COPY docker-ce.repo /etc/yum.repos.d/docker-cd.repo
 
 ### Install packages
-RUN INSTALL_PKGS="coreutils python3-pip jq docker-ce docker-ce-cli containerd.io docker-compose-plugin" && \
+RUN INSTALL_PKGS="coreutils python3-pip jq docker-ce docker-ce-cli containerd.io" && \
   yum clean all &&\
   yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
   --security && \
