@@ -10,7 +10,7 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: DotNet SDK" \
       maintainer="uip@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="5.0.214" \
+      version="6.0.106" \
       release="3.2.0" \
       summary="DotNet SDK container" \
       description="The DotNet SDK container image for the Solutions Delivery Platform"
@@ -22,7 +22,7 @@ COPY LICENSE /licenses
 USER root
 
 ### Install packages
-RUN INSTALL_PKGS="dotnet-sdk-5.0" && \
+RUN INSTALL_PKGS="dotnet-sdk-6.0" && \
   yum clean all &&\
   yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
   --security && \
