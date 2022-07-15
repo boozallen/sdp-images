@@ -3,7 +3,7 @@
 
 ARG BASE_REGISTRY=registry.access.redhat.com
 ARG BASE_IMAGE=ubi8/ubi
-ARG BASE_TAG=8.4
+ARG BASE_TAG=8.6-754
 FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
 ### Required Atomic/OpenShift Labels - https://github.com/projectatomic/ContainerApplicationGenericLabels
@@ -21,12 +21,16 @@ COPY LICENSE /licenses
 ### Use yum as root user
 USER root
 
+COPY docker-ce.repo /etc/yum.repos.d/docker-cd.repo
+
 ### Install packages
-RUN INSTALL_PKGS="coreutils python3-pip jq" && \
+RUN INSTALL_PKGS="coreutils python3-pip jq docker-ce docker-ce-cli containerd.io" && \
   yum clean all &&\
   yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs \
   --security && \
-  yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}
+  yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS} && \
+  systemctl enable docker
+
 
 ### Install yq
 RUN python3 -m pip install --user yq
