@@ -10,8 +10,8 @@ FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 LABEL name="Solutions Delivery Platform: Cookiecutter" \
       maintainer="uip@bah.com" \
       vendor="Booz Allen Hamilton" \
-      version="1.7.3" \
-      release="1.7.3" \
+      version="2.1.1" \
+      release="2.1.1" \
       summary="Python3 Cookiecutter Library" \
       description="The Python3 Cookiecutter container image for the Solutions Delivery Platform"
 
@@ -24,12 +24,13 @@ USER root
 ENV PROGRAM_NAME cookiecutter
 ENV HOME /root
 ENV PROGRAM_DESTINATION_DIR /usr/local/bin
-ENV PROGRAM_VERSION 1.7.3
+ENV PROGRAM_VERSION 2.1.1
 
 ### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="coreutils python3-pip "                                                                        && \
+RUN INSTALL_PKGS="coreutils python39-pip "                                                                        && \
     yum clean all                                                                                                && \
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs --security                && \
+    yum -y install python39                                                                                   && \ 
     yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}   && \
     python3 -m pip install --user ${PROGRAM_NAME}==${PROGRAM_VERSION}
 
