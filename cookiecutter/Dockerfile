@@ -22,25 +22,21 @@ COPY LICENSE /licenses
 USER root
 
 ENV PROGRAM_NAME cookiecutter
-ENV HOME /root
-ENV PROGRAM_DESTINATION_DIR /usr/local/bin
 ENV PROGRAM_VERSION 2.1.1
 
-### Add necessary Red Hat repos and packages here
-RUN INSTALL_PKGS="coreutils python39-pip "                                                                        && \
-    yum clean all                                                                                                && \
-    yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs --security                && \
-    yum -y install python39                                                                                   && \ 
-    yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}   && \
-    python3 -m pip install --user ${PROGRAM_NAME}==${PROGRAM_VERSION}
-
 ARG user=${PROGRAM_NAME}
-
-WORKDIR /cookiecutter
 
 # Add user, create required directories  and cleanup
 RUN useradd -ms /bin/bash ${user}                                                                              && \
     yum --nogpgcheck --disableplugin=subscription-manager clean all
+
+### Add necessary Red Hat repos and packages here. cookiecutter 2.1.1 needs more recent python version.
+RUN INSTALL_PKGS="coreutils python39 python39-pip git"                                                              && \
+    yum clean all                                                                                                && \
+    yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs --security                && \
+    yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}
+
+WORKDIR /home/cookiecutter
 
 ### Insert Container Entry Point Script
 COPY container-entrypoint.sh /usr/local/bin/container-entrypoint.sh
@@ -49,5 +45,7 @@ COPY container-entrypoint.sh /usr/local/bin/container-entrypoint.sh
 RUN chmod +x /usr/local/bin/container-entrypoint.sh
 
 USER ${user}
+
+RUN python3 -m pip install --user ${PROGRAM_NAME}==${PROGRAM_VERSION}
 
 ENTRYPOINT [ "/bin/sh", "/usr/local/bin/container-entrypoint.sh" ]
