@@ -31,9 +31,7 @@ RUN INSTALL_PKGS="coreutils python39 python39-pip git"                          
     yum clean all                                                                                                && \
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs --security                && \
     yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}   && \
-    python3 -m pip install --user ${PROGRAM_NAME}==${PROGRAM_VERSION}                                            
-
-ENV PATH="$PATH:~/.local/bin"
+    python3 -m pip install ${PROGRAM_NAME}==${PROGRAM_VERSION}                                            
 
 ### Insert Container Entry Point Script
 COPY container-entrypoint.sh /usr/local/bin/container-entrypoint.sh
