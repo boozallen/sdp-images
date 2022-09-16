@@ -21,31 +21,24 @@ COPY LICENSE /licenses
 ### Use yum as root user
 USER root
 
+WORKDIR /root
+
 ENV PROGRAM_NAME cookiecutter
 ENV PROGRAM_VERSION 2.1.1
 
-ARG user=${PROGRAM_NAME}
-
-# Add user, create required directories  and cleanup
-RUN useradd -ms /bin/bash ${user}                                                                              && \
-    yum --nogpgcheck --disableplugin=subscription-manager clean all
-
 ### Add necessary Red Hat repos and packages here. cookiecutter 2.1.1 needs more recent python version.
-RUN INSTALL_PKGS="coreutils python39 python39-pip git"                                                              && \
+RUN INSTALL_PKGS="coreutils python39 python39-pip git"                                                           && \
     yum clean all                                                                                                && \
     yum --disableplugin=subscription-manager -y update-minimal --setopt=tsflags=nodocs --security                && \
-    yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}
+    yum --disableplugin=subscription-manager -y install --allowerasing --setopt=tsflags=nodocs ${INSTALL_PKGS}   && \
+    python3 -m pip install --user ${PROGRAM_NAME}==${PROGRAM_VERSION}                                            
 
-WORKDIR /home/cookiecutter
+ENV PATH="$PATH:~/.local/bin"
 
 ### Insert Container Entry Point Script
 COPY container-entrypoint.sh /usr/local/bin/container-entrypoint.sh
 
 ### Set script as executable
 RUN chmod +x /usr/local/bin/container-entrypoint.sh
-
-USER ${user}
-
-RUN python3 -m pip install --user ${PROGRAM_NAME}==${PROGRAM_VERSION}
 
 ENTRYPOINT [ "/bin/sh", "/usr/local/bin/container-entrypoint.sh" ]
