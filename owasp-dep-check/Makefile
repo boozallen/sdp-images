@@ -1,14 +1,13 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = owasp-dep-check
-VERSION  = 6.2.2
+VERSION  = 7.3.0
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
 
 .PHONY: help Makefile
 .ONESHELL: push
-
 
 # Put it first so that "make" without argument is like "make help".
 help: ## Show target options
@@ -26,12 +25,6 @@ push: ## builds and publishes container image
 	docker tag $(TAG) $(REGISTRY)/$(IMAGE):latest
 	docker push $(TAG)
 	docker push $(REGISTRY)/$(IMAGE):latest
-
-build-dep: ## build container dependencies
-	$(eval dir := $(shell pwd))
-	docker run -it -v $(dir)/prebuild:/root/prebuild:z centos:8  /root/prebuild/pull-from-centos.sh
-	docker run -u root -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.4 /root/prebuild/dependency-handling.sh
-	docker run -it -v $(dir)/prebuild:/root/prebuild:z registry.access.redhat.com/ubi8/ubi:8.4 /root/prebuild/build-dep.sh
 
 info:
 	@echo "$(TAG) -> $$(dirname $$(git ls-files --full-name Makefile))"
