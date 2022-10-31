@@ -8,7 +8,7 @@ COPY LICENSE /licenses
 
 ### Update and install required packages
 RUN dnf update -y --nodocs && \
-    dnf install -y java-17-openjdk-devel unzip && \
+    dnf install -y java-17-openjdk-devel unzip dotnet-sdk-6.0.x86_64 && \
     dnf module install -y nodejs:16 && \
     dnf clean all && \
     npm install --global yarn && \
@@ -43,7 +43,7 @@ RUN chmod +x /usr/share/dependency-check/bin/container-entrypoint.sh
 USER ${UID}
 
 ### Pull latest NVD data
-RUN /usr/share/dependency-check/bin/dependency-check.sh --updateonly
+RUN /usr/share/dependency-check/bin/dependency-check.sh --enableExperimental --updateonly
 
 VOLUME ["/src", "/report"]
 WORKDIR /src
