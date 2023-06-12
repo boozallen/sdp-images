@@ -1,0 +1,43 @@
+# Copyright © 2018 Booz Allen Hamilton. All Rights Reserved.
+# This software package is licensed under the Booz Allen Public License. The license can be found in the License file or at http://boozallen.github.io/licenses/bapl
+
+ARG BASE_REGISTRY=registry.access.redhat.com
+ARG BASE_IMAGE=ubi8/ubi
+ARG BASE_TAG=8.3
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
+
+SHELL ["/bin/bash", "-c"]
+ARG NVM_VERSION=v0.38.0
+ARG CHROME_VERSION=102.0.5005.61
+
+# install unzip & wget
+RUN dnf update -y --nodocs && \
+  dnf install -y --nodocs unzip wget && \
+  dnf clean all && \
+  rm -rf /var/cache/dnf
+
+# install NVM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install.sh | bash && \
+  source ~/.bashrc && nvm install 'lts/*'
+
+# install chromedriver
+RUN wget https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip && \
+  unzip chromedriver_linux64.zip && \
+  mv chromedriver /usr/bin
+
+# setup repos needed for installing chrome dependencies
+COPY centos.repo /etc/yum.repos.d/
+
+# import chrome signing key
+RUN wget https://dl.google.com/linux/linux_signing_key.pub && \
+  rpm --import linux_signing_key.pub
+
+# install chrome
+RUN wget https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-${CHROME_VERSION}-1.x86_64.rpm && \
+  dnf -y install google-chrome-stable-${CHROME_VERSION}-1.x86_64.rpm
+
+# cleanup
+RUN rm -f /tmp/chromedriver.zip linux_signing_key.pub google-chrome-stable-${CHROME_VERSION}-1.x86_64.rpm && \
+  rm -rf /var/cache/*
+
+CMD ["/bin/bash"]
