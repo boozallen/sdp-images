@@ -6,11 +6,9 @@ FROM ghcr.io/boozallen/sdp-images/nvm:1.0.0
 SHELL ["/bin/bash", "-c"]
 ARG CHROME_VERSION=102.0.5005.61
 
-# install unzip & wget
+# install unzip, wget
 RUN dnf update -y --nodocs && \
-  dnf install -y --nodocs unzip wget && \
-  dnf clean all && \
-  rm -rf /var/cache/dnf
+  dnf install -y --nodocs unzip wget
 
 # install chromedriver
 RUN wget https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip && \
@@ -28,8 +26,12 @@ RUN wget https://dl.google.com/linux/linux_signing_key.pub && \
 RUN wget https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-${CHROME_VERSION}-1.x86_64.rpm && \
   dnf -y install google-chrome-stable-${CHROME_VERSION}-1.x86_64.rpm
 
+# install cypress dependencies (https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies)
+RUN dnf install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib
+
 # cleanup
 RUN rm -f /tmp/chromedriver.zip linux_signing_key.pub google-chrome-stable-${CHROME_VERSION}-1.x86_64.rpm && \
+  dnf clean all && \
   rm -rf /var/cache/*
 
 CMD ["/bin/bash"]
