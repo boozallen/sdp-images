@@ -8,3 +8,7 @@ jenkinsfile-runner/.jfr
 # Sonar-Scanner
 sonar-scanner/prebuild/dependencies
 sonar-scanner/prebuild/*.tar.gz
+
+# Jenkins agent
+jenkins-agent/prebuild/dependencies
+jenkins-agent/prebuild/*.tar.gz
