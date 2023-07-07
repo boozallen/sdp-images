@@ -1,4 +1,4 @@
-FROM ghcr.io/boozallen/sdp-images/jenkins-agent:3.23
+FROM ghcr.io/boozallen/sdp-images/jenkins-agent:3.23@sha256:c8f181b597cce25bada5c65e54e066dd1d02acaddb25d6583edb5e8358f884e3
 
 ENV JENKINS_SWARM_VERSION 3.40
 ENV JNLP_SLAVE_VERSION 4.14
