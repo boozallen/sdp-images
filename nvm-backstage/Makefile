@@ -1,7 +1,7 @@
 OWNER    = boozallen
 REPO     = sdp-images
 IMAGE    = nvm-backstage
-VERSION  = 1.0.0-beta
+VERSION  = 1.0.1-beta
 
 REGISTRY = docker.pkg.github.com/$(OWNER)/$(REPO)
 TAG      = $(REGISTRY)/$(IMAGE):$(VERSION)
