@@ -14,7 +14,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERSION}/install
 RUN source ~/.bashrc && nvm install 'lts/*'
 
 RUN dnf update -y --nodocs && \
-  dnf install -y --nodocs python3 make gcc && \
+  dnf install -y --nodocs python3 make gcc gcc-c++ && \
   dnf clean all && \
   rm -rf /var/cache/*
 
