@@ -1,7 +1,7 @@
 .. home: 
 
 --------------------
-SDP Container Images
+SDP Container Images: ⚠️ PROJECT RETIRED NOTICE
 --------------------
 
 ==================
